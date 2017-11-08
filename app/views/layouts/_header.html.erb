@@ -1,0 +1,61 @@
+<header>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+          <div class="navbar-header"> <!-- Boton que va a aparecer cuando se haga responsie-->
+              <button type ="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navegacion-edu">
+                <span class="sr-only"> Desplegar/Ocultar Menu </span>  
+                <span class="icon-bar"> </span>  
+                <span class="icon-bar"> </span>  
+                <span class="icon-bar"> </span>  
+              </button>
+              <a href="index.html" class="navbar-brand">Educanding</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navegacion-edu">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Inicio</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+
+                    Categorias <span class="caret"> </span>
+
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Lo que quieras</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Lo que quieras</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Lo que quieras</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Otro</a></li>
+                <li><a href="#">Contacto</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right registro form-group">
+                  <button type="submit" class="btn btn-primary">
+                      <a href="#">Registrarse</a>
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                     <a href="#">Iniciar Sesión</a>
+                  </button>
+                 
+              </ul>
+              <form action="" class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="buscar">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </form>
+          </div>
+      </div>
+    </nav>
+
+  </header>
+  <section class="jumbotron">
+    <div class="container">
+      <%= image_tag "logo.png", class:"img-responsive", alt:"Imagen del Logo" %>
+      <p>Aplicacion para realizar preguntas y respuestas.</p> 
+      
+    </div>
+  </section>

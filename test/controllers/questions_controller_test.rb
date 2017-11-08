@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ComentarioTest < ActiveSupport::TestCase
+class QuestionsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

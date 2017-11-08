@@ -9,6 +9,43 @@
   </head>
 
   <body>
-    <%= yield %>
+  	
+	<%= render '/layouts/header' %>
+
+      <section class="main container">
+    <div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><a href="#">Inicio</a></li>
+
+          </ol>
+        </div>
+
+        <%= yield %>
+
+        <nav>
+          <div class="center-block">
+            <ul class="pagination">
+              <li class="disabled"><a href="#"> &laquo;<span class="sr-only">Anterior</span></a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <li><a href="#">&raquo; <span class="sr-only">Siguiente</span></a></li>
+
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+      </section>
+      
+    
+  </section>
+    <%= render '/layouts/footer' %>
+    
   </body>
 </html>
