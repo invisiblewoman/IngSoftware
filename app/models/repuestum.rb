@@ -1,0 +1,2 @@
+class Repuestum < ApplicationRecord
+end
