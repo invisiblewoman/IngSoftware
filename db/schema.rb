@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106210053) do
+ActiveRecord::Schema.define(version: 20171108183127) do
 
   create_table "comentarios", force: :cascade do |t|
     t.string "texto"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 20171106210053) do
     t.string "texto"
     t.string "fecha"
     t.integer "votos"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "titulo"
+    t.string "descripcion"
+    t.string "cuerpo"
+    t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
