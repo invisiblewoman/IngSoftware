@@ -1,0 +1,15 @@
+<%= form_for :question do |f| %>
+  <p>
+    <%= f.label :Titulo %><br>
+    <%= f.text_field :titulo %>
+  </p>
+
+  <p>
+    <%= f.label :Cuerpo %><br>
+    <%= f.text_area :cuerpo %>
+  </p>
+
+  <p>
+    <%= f.submit "Enviar Pregunta" %>
+  </p>
+<% end %>
