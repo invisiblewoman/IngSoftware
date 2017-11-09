@@ -37,19 +37,21 @@
                   <% if user_signed_in? %>
                       Logged in as <strong><%= current_user.email %></strong>.
                       <button type="submit" class="btn btn-primary">
-                        <a> <%= link_to 'Edit profile', edit_user_registration_path%> </a>
-                      <button type="submit" class="btn btn-primary">
-                        <a> <%= link_to "Logout", destroy_user_session_path, method: :delete%> </a>
-                  <% else %>
-                      <button type="submit" class="btn btn-primary">
-                        <a>
-                          <%=link_to "Registrarse",new_user_registration_url %>
-                        </a>
+                        <%= link_to 'Perfil', edit_user_registration_path%> 
                       </button>
                       <button type="submit" class="btn btn-primary">
-                          <a>
+                         <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete%> 
+                      </button>
+                  <% else %>
+                      <button type="submit" class="btn btn-primary">
+                        
+                          <%=link_to "Registrarse",new_user_registration_url %>
+                        
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                          
                            <%=link_to "Iniciar Sesión",new_user_session_url %>
-                          </a>
+                          
                       </button>
                   
                   <% end %>

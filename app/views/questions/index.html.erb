@@ -6,7 +6,28 @@
 
           </ol>
  </div>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam voluptatum ipsam nostrum blanditiis, molestias magnam ea quia voluptates quidem error laudantium explicabo ipsa labore cupiditate voluptas hic, dolorem expedita aliquam.
+ <% cantidad=Question.count %>
+ <% if cantidad == 0 %>
+    <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
+<% else %>
+  <% Question.all.each do |preguntas| %>
+  <article class="post clearfix">
+          <a href="#" class="thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
+
+          <h2 class="post-title"><a href="#"><%= preguntas.titulo %></a></h2>
+          <p><span class="post-fecha"><%= preguntas.fecha %></span> por <span class="post-autor"><a href="#">Autor</a></span></p>
+          <p class="post-contenido text-justify"><%= preguntas.descripcion %></p>  
+
+          <div class="contenedor-botones">
+            <a href="#" class="btn btn-primary pull-right">Leer Mas</a>
+            <a href="#" class="btn btn-success pull-right">Comentarios <span class="badge">20</span></a> 
+          </div> 
+
+  </article>
+<% end %>
+<% end %>
+
 
 <nav>
 <div class="center-block">
