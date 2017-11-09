@@ -10,34 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108183127) do
+ActiveRecord::Schema.define(version: 20171109011628) do
 
-  create_table "comentarios", force: :cascade do |t|
+  create_table "answers", force: :cascade do |t|
     t.string "texto"
-    t.string "fecha"
-    t.integer "votos"
+    t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "etiqueta", force: :cascade do |t|
-    t.string "nombre"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "facultads", force: :cascade do |t|
-    t.string "nombre"
-    t.string "ubicacion"
-    t.string "tipo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "pregunta", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.string "texto"
-    t.string "fecha"
-    t.integer "votos"
+    t.date "fecha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "question_tags", force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,17 +42,38 @@ ActiveRecord::Schema.define(version: 20171108183127) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "repuesta", force: :cascade do |t|
-    t.string "text"
-    t.string "fecha"
+  create_table "tags", force: :cascade do |t|
+    t.string "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "nombre"
+    t.string "apellido"
+    t.string "descripcion"
+    t.integer "votos"
+    t.string "foto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "usuarios", force: :cascade do |t|
     t.string "nombre"
     t.string "apellido"
-    t.string "mail"
+    t.string "email"
     t.string "descripcion"
     t.string "foto"
     t.integer "puntos"
