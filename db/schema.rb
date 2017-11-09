@@ -10,34 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108183127) do
+ActiveRecord::Schema.define(version: 20171108185634) do
 
-  create_table "comentarios", force: :cascade do |t|
+  create_table "answers", force: :cascade do |t|
     t.string "texto"
-    t.string "fecha"
-    t.integer "votos"
+    t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "etiqueta", force: :cascade do |t|
-    t.string "nombre"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "facultads", force: :cascade do |t|
-    t.string "nombre"
-    t.string "ubicacion"
-    t.string "tipo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "pregunta", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.string "texto"
-    t.string "fecha"
-    t.integer "votos"
+    t.date "fecha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "question_tags", force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,9 +42,8 @@ ActiveRecord::Schema.define(version: 20171108183127) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "repuesta", force: :cascade do |t|
-    t.string "text"
-    t.string "fecha"
+  create_table "tags", force: :cascade do |t|
+    t.string "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -61,7 +51,7 @@ ActiveRecord::Schema.define(version: 20171108183127) do
   create_table "usuarios", force: :cascade do |t|
     t.string "nombre"
     t.string "apellido"
-    t.string "mail"
+    t.string "email"
     t.string "descripcion"
     t.string "foto"
     t.integer "puntos"
