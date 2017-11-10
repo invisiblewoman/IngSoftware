@@ -11,11 +11,13 @@ class QuestionsController < ApplicationController
 	end
 	def create
 		@question = Question.new(
+
 		params.require(:question)
 		.permit(:nombre)
 		)
 		if @question.save
 			redirect_to question_path
+
 		else
 			render :new
 		end
