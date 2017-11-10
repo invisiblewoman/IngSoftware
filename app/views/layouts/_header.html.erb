@@ -36,24 +36,13 @@
                   
                   <% if user_signed_in? %>
                       <%= current_user.email %>
-                      <button type="submit" class="btn btn-primary">
-                        <%= link_to 'Perfil', edit_user_registration_path%> 
-                      </button>
-                      <button type="submit" class="btn btn-primary">
-                         <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete%> 
-                      </button>
+                      <%= link_to 'Perfil', edit_user_registration_path,class:"btn btn-primary"%> 
+                      <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete,class:"btn btn-primary"%> 
                   <% else %>
-                      <button type="submit" class="btn btn-primary">
-                        
-                          <%=link_to "Registrarse",new_user_registration_url %>
-                        
-                      </button>
-                      <button type="submit" class="btn btn-primary">
+
+                      <%=link_to "Registrarse",new_user_registration_url,class:"btn btn-primary" %>
                           
-                           <%=link_to "Iniciar Sesión",new_user_session_url %>
-                          
-                      </button>
-                  
+                      <%=link_to "Iniciar Sesión",new_user_session_url,class:"btn btn-primary"%>                 
                   <% end %>
                  
               </ul>
