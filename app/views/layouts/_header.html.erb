@@ -29,7 +29,9 @@
                     <li><a href="#">Lo que quieras</a></li>
                   </ul>
                 </li>
-                <li><a href="#">Otro</a></li>
+                <% if user_signed_in? %>
+                  <li><%= link_to 'Nueva Pregunta', new_question_path %> </li>
+                <% end %>
                 <li><a href="#">Contacto</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right registro form-group">

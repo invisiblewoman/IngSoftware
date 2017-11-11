@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109011628) do
+ActiveRecord::Schema.define(version: 20171110132636) do
 
   create_table "answers", force: :cascade do |t|
     t.string "texto"
@@ -40,10 +40,25 @@ ActiveRecord::Schema.define(version: 20171109011628) do
     t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "universities", force: :cascade do |t|
+    t.string "nombre"
+    t.string "ubicacion"
+    t.string "tipo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_universities", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,8 +81,10 @@ ActiveRecord::Schema.define(version: 20171109011628) do
     t.string "foto"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "university_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["university_id"], name: "index_users_on_university_id"
   end
 
 end

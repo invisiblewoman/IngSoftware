@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+	before_action :authenticate_user!,except:[:index]
 	def index
 	end
 	def destroy
@@ -11,12 +12,12 @@ class QuestionsController < ApplicationController
 	end
 	def create
 		@question = Question.new(
-
 		params.require(:question)
-		.permit(:nombre)
+		.permit(:cuerpo,:titulo,tag_ids: [])
 		)
+		@question.user = current_user 
 		if @question.save
-			redirect_to question_path
+			redirect_to questions_path
 
 		else
 			render :new

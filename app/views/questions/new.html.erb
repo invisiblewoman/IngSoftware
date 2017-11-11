@@ -1,0 +1,17 @@
+<%= form_for @question do |f| %>
+  <div class="form-group">
+    <%= f.label :titulo %>
+    <%= f.text_field :titulo, class: "form-control", placeholder: "Escriba el titulo de la pregunta" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :cuerpo, "Cuerpo de la pregunta" %><br>
+    <%= f.text_area :cuerpo,class: "form-control", placeholder: "Escriba su pregunta",rows:15 %>
+  </div>
+  <div class="checkbox">
+    <p>Seleccione su etiqueta</p> 
+    <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control"}  %>
+ 
+  </div>
+  <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>
+<% end %>
+

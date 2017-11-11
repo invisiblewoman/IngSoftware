@@ -10,18 +10,24 @@
  <% if cantidad == 0 %>
     <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
 <% else %>
-  <% Question.all.each do |preguntas| %>
+  <% Question.all.each do |pregunta| %>
   <article class="post clearfix">
           <a href="#" class="thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
 
-          <h2 class="post-title"><a href="#"><%= preguntas.titulo %></a></h2>
-          <p><span class="post-fecha"><%= preguntas.fecha %></span> por <span class="post-autor"><a href="#">Autor</a></span></p>
-          <p class="post-contenido text-justify"><%= preguntas.descripcion %></p>  
-
+          <h2 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
+          <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"><%= pregunta.user.full_name %> </a></span></p>
+          <p class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 30 ) %></p>  
+          <br>
+          <h4> Etiquetas:</h4>
+          <% pregunta.tags.each do |tag| %>
+            <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+          <% end %>
+          <h4>Universidad:</h4>
+          <p><%= pregunta.user.university.nombre %></span></p>
           <div class="contenedor-botones">
             <a href="#" class="btn btn-primary pull-right">Leer Mas</a>
-            <a href="#" class="btn btn-success pull-right">Comentarios <span class="badge">20</span></a> 
+            <a href="#" class="btn btn-success pull-right">Comentarios <span class="badge">LA PLATA RULES</span></a> 
           </div> 
 
   </article>
