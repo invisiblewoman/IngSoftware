@@ -3,6 +3,11 @@ body{
 	font-family: times new roman;
 	background-color: #E6E6E6;
 }
+.Cant-respuestas{
+	padding:2px;
+	margin-bottom: 10px;
+
+}
 .navbar {
 	margin-bottom:0;
 	font-family: times new roman;

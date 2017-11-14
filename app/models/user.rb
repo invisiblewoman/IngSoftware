@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 	belongs_to :university, optional: true
 	has_many :questions
+	has_many :answers
 
   def full_name
   	"#{nombre} #{apellido}"

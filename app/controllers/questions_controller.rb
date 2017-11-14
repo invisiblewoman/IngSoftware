@@ -2,6 +2,9 @@ class QuestionsController < ApplicationController
 	before_action :authenticate_user!,except:[:index]
 	def index
 	end
+	def show
+		@question = Question.find(params[:id])
+	end 
 	def destroy
 	    question = Question.find(params[:id])
 	    question.destroy
@@ -15,7 +18,8 @@ class QuestionsController < ApplicationController
 		params.require(:question)
 		.permit(:cuerpo,:titulo,tag_ids: [])
 		)
-		@question.user = current_user 
+		@question.user = current_user
+		@question.fecha = Time.now 
 		if @question.save
 			redirect_to questions_path
 

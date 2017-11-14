@@ -1,0 +1,52 @@
+<article class="post clearfix">
+          <a href="#" class="thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
+
+          <h2 class="post-title"><a href="#"><%= @question.titulo %></a></h2>
+          <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.user.full_name %> </a></span></p>
+          <p class="post-contenido text-justify"><%= @question.cuerpo %></p>  
+          <br>
+          <h4> Etiquetas:</h4>
+          <% @question.tags.each do |tag| %>
+            <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+          <% end %>
+          <h4>Universidad:</h4>
+          <p><%= @question.user.university.nombre %></span></p>
+          <div class="input-group">
+            <input type="text" class="form-control" aria-label="...">
+            <div class="input-group-btn">
+              <a href="#" class="btn btn-success pull-right">Comentar</a> 
+            </div>
+          </div>
+  </article>
+   <% cantidad=@question.answer.count %>
+  <div class="Cant-respuestas">
+    <button class="btn btn-primary" type="button">
+      Respuestas <span class="badge"><%= cantidad %></span>
+    </button>
+  </div>
+    
+   
+ <% if cantidad != 0 %>
+  <% @question.answer.all.each do |answer| %>
+  <article class="post clearfix">
+          <a href="#" class="thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
+
+          <p><span class="post-fecha"><%= answer.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.answer.user.full_name %> </a></span></p>
+          <p class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 30 ) %></p>  
+          <br>
+
+  </article>
+  
+<% end %>
+<% end %>
+
+<% @answer = Answer.new %>
+<%= form_for @answer do |f| %>
+  <div class="form-group">
+    <%= f.label :texto, "Cuerpo de la respuesta" %><br>
+    <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta",rows:8 %>
+  </div>
+  <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
+<% end %>
