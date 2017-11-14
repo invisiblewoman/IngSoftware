@@ -3,10 +3,34 @@ body{
 	font-family: times new roman;
 	background-color: #E6E6E6;
 }
+.imagen{
+	padding: 0px;
+	margin:5px;
+	max-width: 100px;
+	height: 50px;
+	display:inline;
+}
+.imagen-logo{
+	width: 25%;
+}
+.encabezado{
+	margin-bottom: 30px;
+}
+.encabezado a{
+	display: inline-block;
+	
+}
 .Cant-respuestas{
 	padding:2px;
 	margin-bottom: 10px;
 
+}
+.usuario-logeado{
+	display: inline-block;
+	color:white;
+}
+.form-control{
+	resize: none
 }
 .navbar {
 	margin-bottom:0;
@@ -62,7 +86,7 @@ ul.dropdown-menu{
 
 }
 .post img{
-	width: 84%;
+	width: 100%;
 }
 .post .post-contenido {
 	margin-top:30px;

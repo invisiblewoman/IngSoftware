@@ -13,31 +13,34 @@
             
           </div>
           <div class="collapse navbar-collapse" id="navegacion-edu">
-              <ul class="nav navbar-nav">
-                
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+              <% if user_signed_in? %>
+                <ul class="nav navbar-nav">
+                  
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
 
-                    Categorias <span class="caret"> </span>
+                      Crear <span class="caret"> </span>
 
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Lo que quieras</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Lo que quieras</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Lo que quieras</a></li>
-                  </ul>
-                </li>
-                <% if user_signed_in? %>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Facultad</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Etiqueta</a></li>>
+                    </ul>
+                  </li>
                   <li><%= link_to 'Nueva Pregunta', new_question_path %> </li>
-                <% end %>
-                <li><a href="#">Contacto</a></li>
-              </ul>
+                  <li><a href="#">Contacto</a></li>
+                </ul>
+              <% end %>
               <ul class="nav navbar-nav navbar-right registro form-group">
                   
                   <% if user_signed_in? %>
-                      <%= current_user.email %>
+                    <div class="usuario-logeado">
+
+                      <p>Hola!, <%= current_user.full_name %> </p>
+
+                    </div>
+                      
                       <%= link_to 'Perfil', edit_user_registration_path,class:"btn btn-primary"%> 
                       <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete,class:"btn btn-primary"%> 
                   <% else %>
@@ -63,7 +66,7 @@
   </header>
   <section class="jumbotron">
     <div class="container">
-      <%= image_tag "logo.png", class:"img-responsive", alt:"Imagen del Logo" %>
+      <%= image_tag "logo.png", class:"img-responsive imagen-logo" ,alt:"Imagen del Logo" %>
       <p>Aplicacion para realizar preguntas y respuestas.</p> 
       
     </div>
