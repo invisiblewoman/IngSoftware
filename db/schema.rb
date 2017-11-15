@@ -91,15 +91,4 @@ ActiveRecord::Schema.define(version: 20171113204828) do
     t.index ["university_id"], name: "index_users_on_university_id"
   end
 
-  create_table "usuarios", force: :cascade do |t|
-    t.string "nombre"
-    t.string "apellido"
-    t.string "email"
-    t.string "descripcion"
-    t.string "foto"
-    t.integer "puntos"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
 end
