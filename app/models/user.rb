@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 	belongs_to :university, optional: true
 	has_many :questions, dependent: :destroy
-	has_many :answers,dependent: :destroy
-
+	has_many :answers, dependent: :destroy
+  has_many :comment, dependent: :destroy
   def full_name
   	"#{nombre} #{apellido}"
   end

@@ -3,6 +3,12 @@ body{
 	font-family: times new roman;
 	background-color: #E6E6E6;
 }
+
+.Logo{
+	padding: 0px;
+	margin:5px;
+	
+}
 .imagen{
 	padding: 0px;
 	margin:5px;

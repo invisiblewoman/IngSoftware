@@ -54,12 +54,12 @@
 <% end %>
 <% end %>
 <% if user_signed_in? %>
+
   <% @answer = Answer.new %>
-  <% @answer.question = @question %>
-  <%= form_for @answer do |f| %>
+  <%= form_for [@question,@answer] do |f| %>
     <div class="form-group">
       <%= f.label :texto, "Cuerpo de la respuesta" %><br>
-      <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta",rows:8 %>
+      <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta",rows:8, required:true %>
       <% f.hidden_field :question %>
     </div>
     <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>

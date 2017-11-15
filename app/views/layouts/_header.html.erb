@@ -9,7 +9,7 @@
                 <span class="icon-bar"> </span>  
               </button>
 
-              <%= link_to 'Educanding',questions_url, class:"navbar-brand"  %> 
+              <%= link_to (image_tag "logo_chico.png", class:"Logo"),questions_url, class:"navbar-brand"  %> 
             
           </div>
           <div class="collapse navbar-collapse" id="navegacion-edu">
@@ -37,7 +37,7 @@
                   <% if user_signed_in? %>
                     <div class="usuario-logeado">
 
-                      <p>Hola!, <%= current_user.full_name %> </p>
+                      <p><%= current_user.full_name %> </p>
 
                     </div>
                       

@@ -7,24 +7,25 @@ class AnswersController < ApplicationController
   end
 
   def new
-    @answer=Answer.new
+  
+    @answer = Answer.new
     render :create
   end
 
   def create
+    
     @answer = Answer.new(
-    params.require(:answer)
-    .permit(:texto,:question_id)
+      params.require(:answer)
+        .permit(:texto,:question_id)
     )
-    @answer.question_id=10
+    @answer.question_id = params[:question_id]
     @answer.user = current_user
     @answer.fecha = Time.now 
-    if @answer.save
-      redirect_to question_path(@answer.question_id)
+    @answer.save
 
-    else
-      redirect_to question_path(:id => params[:answer[:question_id]])
-    end
+    redirect_to question_path(params[:question_id])
+
+ 
 
   end
   def edit

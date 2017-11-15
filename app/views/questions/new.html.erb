@@ -1,11 +1,11 @@
 <%= form_for @question do |f| %>
   <div class="form-group">
     <%= f.label :titulo %>
-    <%= f.text_field :titulo, class: "form-control", placeholder: "Escriba el titulo de la pregunta" %>
+    <%= f.text_field :titulo, class: "form-control", placeholder: "Escriba la pregunta", required:true %>
   </div>
   <div class="form-group">
     <%= f.label :cuerpo, "Cuerpo de la pregunta" %><br>
-    <%= f.text_area :cuerpo,class: "form-control", placeholder: "Escriba su pregunta",rows:15 %>
+    <%= f.text_area :cuerpo,class: "form-control", placeholder: "Escriba una descripcion de su pregunta", required:true ,rows:15 %>
   </div>
   <div class="checkbox">
     <p>Seleccione su etiqueta</p> 

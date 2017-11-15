@@ -6,12 +6,15 @@ class CommentsController < ApplicationController
   end
 
   def new
+    @comment=Comment.new
+    render: create
   end
 
   def edit
   end
 
   def create
+
   end
 
   def update
