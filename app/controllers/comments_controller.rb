@@ -7,13 +7,25 @@ class CommentsController < ApplicationController
 
   def new
     @comment=Comment.new
-    render: create
   end
 
   def edit
   end
 
   def create
+    
+    @comment = Comment.new(
+      params.require(:comment)
+        .permit(:texto,:question_id)
+    )
+    @comment.question_id = params[:question_id]
+    @comment.user = current_user
+    @comment.fecha = Time.now 
+    @comment.save
+
+    redirect_to question_path(params[:question_id])
+
+ 
 
   end
 

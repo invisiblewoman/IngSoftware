@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113204828) do
+ActiveRecord::Schema.define(version: 20171116003803) do
 
   create_table "answers", force: :cascade do |t|
     t.string "texto"
@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(version: 20171113204828) do
     t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "answer_id"
+    t.integer "question_id"
+    t.integer "user_id"
+    t.index ["answer_id"], name: "index_comments_on_answer_id"
+    t.index ["question_id"], name: "index_comments_on_question_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "question_tags", force: :cascade do |t|
@@ -45,6 +51,8 @@ ActiveRecord::Schema.define(version: 20171113204828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "university_id"
+    t.index ["university_id"], name: "index_questions_on_university_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -86,6 +94,8 @@ ActiveRecord::Schema.define(version: 20171113204828) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "university_id"
+    t.integer "comment_id"
+    t.index ["comment_id"], name: "index_users_on_comment_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["university_id"], name: "index_users_on_university_id"

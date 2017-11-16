@@ -6,9 +6,11 @@ body{
 
 .Logo{
 	padding: 0px;
-	margin:5px;
+	margin:0px;
+
 	
 }
+
 .imagen{
 	padding: 0px;
 	margin:5px;
@@ -66,9 +68,12 @@ ul.dropdown-menu{
 /* --Post */
 .main .miga-de-pan li a{
 	color: white;
-
-
 }
+.main .miga-de-pan li{
+
+	color:black;
+}
+
 .main .miga-de-pan ol{
 	background-color:#0B243B;
 }

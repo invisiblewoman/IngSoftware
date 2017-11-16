@@ -1,3 +1,10 @@
+<div class="miga-de-pan">
+  <ol class="breadcrumb">
+
+    <li><%= link_to 'Inicio', questions_path %></li>
+    <li><%= @question.titulo %></li>
+  </ol>
+</div>
 <article class="post clearfix">
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
@@ -13,14 +20,18 @@
           <% end %>
           <h4>Universidad:</h4>
           <p><%= @question.user.university.nombre %></span></p>
+
           <% if user_signed_in? %>
-            <div class="input-group">
-              <input type="text" class="form-control" aria-label="...">
-              <div class="input-group-btn">
-                <a href="#" class="btn btn-success pull-right">Comentar</a> 
+            <% @comment = Comment.new %>
+              <%= form_for [@question,@comment] do |f| %>
+                <div class="input-group">
+                  <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                  <% f.hidden_field :question %>
+                  <%= f.submit "Comentar", class:"btn btn-success pull-left" %>
               </div>
-            </div>
+              <% end %>
           <% end %>
+
   </article>
    <% cantidad=@question.answer.count %>
   <div class="Cant-respuestas">
