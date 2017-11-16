@@ -23,11 +23,11 @@
 
           <% if user_signed_in? %>
             <% @comment = Comment.new %>
-              <%= form_for [@question,@comment] do |f| %>
+              <%= form_for [@question,@comment] do |g| %>
                 <div class="input-group">
-                  <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
-                  <% f.hidden_field :question %>
-                  <%= f.submit "Comentar", class:"btn btn-success pull-left" %>
+                  <%= g.text_area :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                  <% g.hidden_field :questions %>
+                  <%= g.submit "Comentar", class:"btn btn-success pull-left" %>
               </div>
               <% end %>
           <% end %>

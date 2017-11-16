@@ -18,11 +18,12 @@ class CommentsController < ApplicationController
       params.require(:comment)
         .permit(:texto,:question_id)
     )
-    @comment.question_id = params[:question_id]
     @comment.user = current_user
+    @comment.question_id = params[:question_id]
+    @comment.answer_id = 1
     @comment.fecha = Time.now 
     @comment.save
-
+byebug
     redirect_to question_path(params[:question_id])
 
  
