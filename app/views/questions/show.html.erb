@@ -37,10 +37,10 @@
           </div>
           <div class="encabezado">
             <p><span class="post-fecha"><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %> </a></span></p>
-              
+               <p><span class="post-contenido text-justify"><%= answer.texto %></span></p>
             <br>
           </div>
-          <p><span class="post-contenido text-justify"><%= answer.texto %></span></p>
+         
           <% if user_signed_in? %>
             <div class="input-group">
               <input type="text" class="form-control" aria-label="...">

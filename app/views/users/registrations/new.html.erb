@@ -41,12 +41,14 @@
   </div>
   </div>
     <br />
-    
-  <div class="form-group">
-    <p>Seleccione su Universidad</p> 
-    <%= f.collection_select(:university_id, University.all, :id, :nombre)%>
+
+ <div class="form-group">
+    <p><strong>Seleccione su Universidad</strong> </p>
+<div class="col-sm-3">
+    <%= f.collection_select(:university_id, University.all, :id, :nombre, {:prompt => false}, {class:"form-control"} )%>
+</div>
   </div>
-  
+
   </div>
   <br/>
   <br/>
