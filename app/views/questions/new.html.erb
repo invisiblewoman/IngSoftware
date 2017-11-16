@@ -1,3 +1,11 @@
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path %></li>
+            <li>Nueva pregunta</li>
+          </ol>
+</div>
 <%= form_for @question do |f| %>
   <div class="form-group">
     <%= f.label :titulo %>

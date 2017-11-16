@@ -1,3 +1,12 @@
+
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path %></li>
+            <li><%= @question.titulo %></li>
+          </ol>
+</div>
 <article class="post clearfix">
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
@@ -41,13 +50,26 @@
             <br>
           </div>
           <p><span class="post-contenido text-justify"><%= answer.texto %></span></p>
-          <% if user_signed_in? %>
-            <div class="input-group">
-              <input type="text" class="form-control" aria-label="...">
-              <div class="input-group-btn">
-                <a href="#" class="btn btn-success pull-right">Comentar</a> 
-              </div>
+          <% comentarios=answer.comment.count %>
+          <% if comentarios != 0 %>
+            <% answer.comment.all.each do |comment| %>
+            <div class="alert alert-success" role="alert">
+               <%= comment.user.full_name %>:  <%= comment.texto %>
             </div>
+            <% end %>
+          <% end %>
+          <% if user_signed_in? %>
+            <% @comment = Comment.new %>  
+            <% @answer=answer %>
+              <%= form_for [@answer,@comment] do |g| %>
+                <div class="input-group">
+                  <%= g.label :texto, "Cuerpo de la respuesta" %><br>
+                  <%= g.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta", required:true %>
+                  <% g.hidden_field :answer %>
+                   <% g.hidden_field :question %>
+               </div>
+                <%= g.submit "Comentar", class:"btn btn-success pull-left"  %>
+            <% end %>
           <% end %>
   </article>
 
