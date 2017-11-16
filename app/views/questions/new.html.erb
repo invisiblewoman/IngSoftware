@@ -9,7 +9,7 @@
   </div>
   <div class="checkbox">
     <p>Seleccione su etiqueta</p> 
-    <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control"}  %>
+    <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control",required:true  }%>
  
   </div>
   <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>

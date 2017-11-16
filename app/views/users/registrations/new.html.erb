@@ -40,6 +40,14 @@
     <%= f.text_field :apellido, autofocus: true , class:"form-control"%>
   </div>
   </div>
+    <br />
+    
+  <div class="form-group">
+    <p>Seleccione su Universidad</p> 
+    <%= f.collection_select(:university_id, University.all, :id, :nombre)%>
+  </div>
+  
+  </div>
   <br/>
   <br/>
   <div >

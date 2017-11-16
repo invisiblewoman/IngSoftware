@@ -55,7 +55,7 @@
 <% end %>
 <% if user_signed_in? %>
 
-  <% @answer = Answer.new %>
+  <% @answer = Answer.new %>  
   <%= form_for [@question,@answer] do |f| %>
     <div class="form-group">
       <%= f.label :texto, "Cuerpo de la respuesta" %><br>
