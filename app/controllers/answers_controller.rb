@@ -13,8 +13,9 @@ class AnswersController < ApplicationController
   end
 
   def create
-    
-    
+      @question = Question.find(params[:question_id])
+      @cantidad = @question.answer.where(user: current_user).count
+    if @cantidad == 0
       @answer = Answer.new(
         params.require(:answer)
           .permit(:texto,:question_id)
@@ -23,7 +24,7 @@ class AnswersController < ApplicationController
       @answer.user = current_user
       @answer.fecha = Time.now 
       @answer.save
-    
+    end
       redirect_to question_path(params[:question_id])
 
  

@@ -91,8 +91,9 @@
 <% end %>
 
 <% if user_signed_in? %>
-  
+ <% @cantidad = @question.answer.where(user: current_user.id).count %> 
  
+  <%if @cantidad == 0 %>
     <% @answer = Answer.new %>  
     <%= form_for [@question,@answer] do |f| %>
       <div class="form-group">
@@ -102,6 +103,8 @@
       </div>
       <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
     <% end %>
-  
+    <% else %>
+  <div class="alert alert-danger" role="alert">Disculpe, solo se puede realizar una respuesta por pregunta</div>
+  <% end %>
 
 <% end %>
