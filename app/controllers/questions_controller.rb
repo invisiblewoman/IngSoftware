@@ -2,6 +2,11 @@ class QuestionsController < ApplicationController
 	before_action :authenticate_user!,except:[:index,:show]
 	def index
 		@condicion = params[:condicion]
+		if params[:buscar]
+			@questions = Question.search(params[:buscar])
+		else 
+			@questions = Question.all
+		end
 	end
 	def show
 		@question = Question.find(params[:id])
