@@ -2,10 +2,10 @@
       <section class="posts col-md-9" >
         <div class="miga-de-pan">
           <ol class="breadcrumb">
-            <li><%= link_to 'Inicio', questions_path %></li>
-            <li>Nueva pregunta</li>
+            <li><%= link_to 'Inicio', questions_path%></li>
+            <li>Nueva Pregunta</li>
           </ol>
-</div>
+ </div>
 <%= form_for @question do |f| %>
   <div class="form-group">
     <%= f.label :titulo %>
@@ -16,10 +16,10 @@
     <%= f.text_area :cuerpo,class: "form-control", placeholder: "Escriba una descripcion de su pregunta", required:true ,rows:15 %>
   </div>
   <div class="checkbox">
-    <p>Seleccione su etiqueta</p> 
+    <p>Seleccione su etiqueta (Debe seleccionar como minimo una etiqueta y como maximo cinco)</p> 
     <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control",required:true  }%>
  
-  </div>
-  <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>
+  </div> 
+    <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>
 <% end %>
 

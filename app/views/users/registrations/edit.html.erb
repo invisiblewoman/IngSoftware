@@ -1,4 +1,4 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Editar Perfil</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -56,13 +56,13 @@
 <br />
 
   <div class="form-group">
-    <p>Seleccione su Universidad</p> 
-    <div class="col-sm-3">
-    <%= f.collection_select(:university_id, University.all, :id, :nombre)%>
-  </div>
+   <p><strong>Seleccione su Facultad</strong> </p>
+<div class="col-sm-3">
+    <%= f.collection_select(:university_id, University.all, :id, :nombre, {:prompt => false}, {class:"form-control"} )%>
+</div>
   </div>
 
-
+ <br /> 
   <br />
   <div class="form-group">
     <%= f.label :current_password, "Contraseña actual" %> <i>(Es necesario ingresar la contraseña actual para guardar los cambios)</i><br />
@@ -71,7 +71,7 @@
   </div> 
   <br /> <br /> <br /> 
   <div class="actions">
-    <%= f.submit "Update",class:"btn btn-primary pull-left"  %>
+    <%= f.submit "Guardar cambios",class:"btn btn-primary pull-left"  %>
   </div>
 <% end %>
 

@@ -6,8 +6,13 @@ body{
 
 .Logo{
 	padding: 0px;
-	margin:0px;
+	margin:5px;
 	
+}
+.CantRespuestas{
+	padding:7px;
+	font-size:1.2em;
+	margin-top:2px;
 }
 .imagen{
 	padding: 0px;
@@ -66,12 +71,12 @@ ul.dropdown-menu{
 /* --Post */
 .main .miga-de-pan li a{
 	color: white;
-}
 
+
+}
 .main .miga-de-pan li{
-	color:black;
+	color:white;
 }
-
 .main .miga-de-pan ol{
 	background-color:#0B243B;
 }

@@ -8,14 +8,14 @@ Rails.application.routes.draw do
 
   resources :questions do
    resources :answers 
-   resources :comments
-  end
-
-  resources :answers do
-    resources :comments
+   resources :question_comments, controller: "question_comments"
     
   
   end
+  resources :answers do
+    resources :answer_comments, controller: "answer_comments"
+  end
+  
   resources :comments
   
   resources :tags

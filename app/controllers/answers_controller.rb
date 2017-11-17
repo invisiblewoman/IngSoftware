@@ -14,16 +14,17 @@ class AnswersController < ApplicationController
 
   def create
     
-    @answer = Answer.new(
-      params.require(:answer)
-        .permit(:texto,:question_id)
-    )
-    @answer.question_id = params[:question_id]
-    @answer.user = current_user
-    @answer.fecha = Time.now 
-    @answer.save
-
-    redirect_to question_path(params[:question_id])
+    
+      @answer = Answer.new(
+        params.require(:answer)
+          .permit(:texto,:question_id)
+      )
+      @answer.question_id = params[:question_id]
+      @answer.user = current_user
+      @answer.fecha = Time.now 
+      @answer.save
+    
+      redirect_to question_path(params[:question_id])
 
  
 

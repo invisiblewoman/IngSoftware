@@ -36,9 +36,11 @@
                   
                   <% if user_signed_in? %>
                     <div class="usuario-logeado">
-
+                    <% if current_user.nombre == "" and current_user.apellido == "" %>
+                      <p><%= current_user.email %> </p>
+                    <% else %>
                       <p><%= current_user.full_name %> </p>
-
+                      <% end %>
                     </div>
                       
                       <%= link_to 'Perfil', edit_user_registration_path,class:"btn btn-primary"%> 
@@ -64,4 +66,3 @@
     </nav>
 
   </header>
-

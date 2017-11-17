@@ -6,7 +6,8 @@ class User < ApplicationRecord
 	belongs_to :university, optional: true
 	has_many :questions, dependent: :destroy
 	has_many :answers, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  has_many :answer_comments, dependent: :destroy
+  has_many :question_comments, dependent: :destroy
   def full_name
   	"#{nombre} #{apellido}"
   end

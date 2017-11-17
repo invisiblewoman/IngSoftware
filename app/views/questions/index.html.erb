@@ -1,8 +1,11 @@
+<% if @condicion %>
+   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
+<% end %>
 <div class="row">
       <section class="posts col-md-9" >
         <div class="miga-de-pan">
           <ol class="breadcrumb">
-            <li><%= link_to 'Inicio', questions_path %></li>
+            <li><%= link_to 'Inicio', questions_path%></li>
 
           </ol>
  </div>
@@ -26,16 +29,15 @@
           <% pregunta.tags.each do |tag| %>
             <button type="button" class="btn btn-default"><%= tag.nombre %></button>
           <% end %>
-          <h4>Universidad:</h4>
+          <h4>Facultad:</h4>
           <p><%= pregunta.user.university.nombre %></span></p>
           <div class="contenedor-botones">
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
-      
-            <p  class="btn btn-success pull-right">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
+           
+            <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
           </div> 
 
   </article>
 <% end %>
 <% end %>
-
 

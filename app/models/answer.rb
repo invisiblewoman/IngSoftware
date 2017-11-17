@@ -1,5 +1,5 @@
 class Answer < ApplicationRecord
 	belongs_to :user
 	belongs_to :question
-	has_many :comment,dependent: :destroy
+	has_many :answer_comment,dependent:  :destroy
 end

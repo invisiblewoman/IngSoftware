@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!,except:[:index,:show]
 	def index
+		@condicion = params[:condicion]
 	end
 	def show
 		@question = Question.find(params[:id])
@@ -21,7 +22,12 @@ class QuestionsController < ApplicationController
 		@question.user = current_user
 		@question.fecha = Time.now 
 		if @question.save
-			redirect_to questions_path
+			if @question.tags.count > 5 then
+				@question.destroy
+				redirect_to questions_path(:condicion => true)
+			else
+				redirect_to questions_path(:condicion => false)
+			end
 
 		else
 			render :new
