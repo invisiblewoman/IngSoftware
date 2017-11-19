@@ -1,8 +1,11 @@
+<% if @condicion == "0" %>
+   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
+<% end %>
 <div class="row">
       <section class="posts col-md-9" >
         <div class="miga-de-pan">
           <ol class="breadcrumb">
-            <li><a href="#">Inicio</a></li>
+            <li><%= link_to 'Inicio', questions_path%></li>
 
           </ol>
  </div>
@@ -10,38 +13,31 @@
  <% if cantidad == 0 %>
     <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
 <% else %>
-  <% Question.all.each do |preguntas| %>
+  <% Question.all.order("created_at desc").each do |pregunta| %>
   <article class="post clearfix">
-          <a href="#" class="thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
+          <div class="encabezado">
+        
+            <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
+            <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
-          <h2 class="post-title"><a href="#"><%= preguntas.titulo %></a></h2>
-          <p><span class="post-fecha"><%= preguntas.fecha %></span> por <span class="post-autor"><a href="#">Autor</a></span></p>
-          <p class="post-contenido text-justify"><%= preguntas.descripcion %></p>  
-
+          </div>
+          <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 
+          <br>
+          <h4> Etiquetas:</h4>
+          <% pregunta.tags.each do |tag| %>
+            <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+          <% end %>
+          <h4>Facultad:</h4>
+          <p><%= pregunta.user.university.nombre %></span></p>
           <div class="contenedor-botones">
-            <a href="#" class="btn btn-primary pull-right">Leer Mas</a>
-            <a href="#" class="btn btn-success pull-right">Comentarios <span class="badge">20</span></a> 
+          <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
+           
+            <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
           </div> 
 
   </article>
 <% end %>
 <% end %>
 
-
-<nav>
-<div class="center-block">
-<ul class="pagination">
-  <li class="disabled"><a href="#"> &laquo;<span class="sr-only">Anterior</span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li>
-    <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <li><a href="#">&raquo; <span class="sr-only">Siguiente</span></a></li>
-
-  </li>
-</ul>
-</div>
-</nav>

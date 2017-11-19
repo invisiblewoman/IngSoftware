@@ -1,0 +1,110 @@
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path%></li>
+            <li><%= @question.titulo %></li>
+          </ol>
+ </div>
+<article class="post clearfix">
+          <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
+          <div class="encabezado">
+            <h3 class="post-title"><a href="#"><%= @question.titulo %></a></h3>
+            <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.user.full_name %> </a></span></p>
+          </div>
+          <p class="post-contenido text-justify"><%= @question.cuerpo %></p>  
+          <br>
+          <h4> Etiquetas:</h4>
+          <% @question.tags.each do |tag| %>
+            <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+          <% end %>
+          <h4>Facultad:</h4>
+          <p><%= @question.user.university.nombre %></span></p>
+          <% cantidad=@question.question_comment.count %>
+          <% if cantidad != 0 %>
+            <% @question.question_comment.all.order("created_at desc").each do |questioncomment| %>
+              <div class="alert alert-success" role="alert">
+               <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+              </div>
+            <% end %>
+          <% end  %>
+          <% if user_signed_in? %>
+              <% @question_comment= QuestionComment.new %>
+              <%= form_for [@question,@question_comment] do |g| %>
+                <div class="form-group">
+                  <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                  <% g.hidden_field :question %>
+                  <div class="input-group-btn">
+                    <%= g.submit "Comentar", class:"btn btn-default"  %>
+                  </div>
+                  
+                </div>
+              <% end %>
+          <% end %>
+  </article>
+   <% cantidad=@question.answer.count %>
+  <div class="Cant-respuestas">
+    <p  class="label label-success pull-left CantRespuestas">Respuestas <span class="badge"><%= cantidad %></span></p>
+    </br>
+    </br>
+    
+  </div>
+    
+   
+ <% if cantidad != 0 %>
+  <% @question.answer.all.order("created_at desc").each do |answer| %>
+  <article class="post clearfix">
+          <div class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </div>
+          <div class="encabezado">
+            <p><span class="post-fecha"><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %> </a></span></p>
+               <p><span class="post-contenido text-justify"><%= answer.texto %></span></p>
+            <br>
+          </div>
+          
+          <% cantidad=answer.answer_comment.count %>
+          <% if cantidad != 0 %>
+            <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
+              <div class="alert alert-success" role="alert">
+               <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+              </div>
+            <% end %>
+          <% end  %>
+          <% if user_signed_in? %>
+            <% @answerComment= AnswerComment.new %>
+            <% @answer = answer %>
+            <%= form_for [@answer,@answerComment] do |g| %>
+              <div class="form-group">
+                <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                <% g.hidden_field :answer %>
+                <div class="input-group-btn">
+                  <%= g.submit "Comentar", class:"btn btn-default"  %>
+                </div>
+                
+              </div>
+            <% end %>
+          <% end %>
+  </article>
+
+<% end %>
+<% end %>
+
+<% if user_signed_in? %>
+ <% @cantidad = @question.answer.where(user: current_user.id).count %> 
+ 
+  <%if @cantidad == 0 %>
+    <% @answer = Answer.new %>  
+    <%= form_for [@question,@answer] do |f| %>
+      <div class="form-group">
+        <%= f.label :texto, "Cuerpo de la respuesta" %><br>
+        <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta",rows:8, required:true %>
+        <% f.hidden_field :question %>
+      </div>
+      <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
+    <% end %>
+    <% else %>
+  <div class="alert alert-danger" role="alert">Disculpe, solo se puede realizar una respuesta por pregunta</div>
+  <% end %>
+
+<% end %>

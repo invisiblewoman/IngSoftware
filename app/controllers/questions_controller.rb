@@ -1,6 +1,11 @@
 class QuestionsController < ApplicationController
+	before_action :authenticate_user!,except:[:index,:show]
 	def index
+		@condicion = params[:condicion]
 	end
+	def show
+		@question = Question.find(params[:id])
+	end 
 	def destroy
 	    question = Question.find(params[:id])
 	    question.destroy
@@ -11,12 +16,18 @@ class QuestionsController < ApplicationController
 	end
 	def create
 		@question = Question.new(
-
 		params.require(:question)
-		.permit(:nombre)
+		.permit(:cuerpo,:titulo,tag_ids: [])
 		)
+		@question.user = current_user
+		@question.fecha = Time.now 
 		if @question.save
-			redirect_to question_path
+			if @question.tags.count > 5 then
+				@question.destroy
+				redirect_to questions_path(:condicion => 0)
+			else
+				redirect_to questions_path(:condicion => 1)
+			end
 
 		else
 			render :new

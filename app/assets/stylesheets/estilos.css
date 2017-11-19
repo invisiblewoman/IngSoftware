@@ -3,6 +3,46 @@ body{
 	font-family: times new roman;
 	background-color: #E6E6E6;
 }
+
+.Logo{
+	padding: 0px;
+	margin:5px;
+	
+}
+.CantRespuestas{
+	padding:7px;
+	font-size:1.2em;
+	margin-top:2px;
+}
+.imagen{
+	padding: 0px;
+	margin:5px;
+	max-width: 100px;
+	height: 50px;
+	display:inline;
+}
+.imagen-logo{
+	width: 25%;
+}
+.encabezado{
+	margin-bottom: 30px;
+}
+.encabezado a{
+	display: inline-block;
+	
+}
+.Cant-respuestas{
+	padding:2px;
+	margin-bottom: 10px;
+
+}
+.usuario-logeado{
+	display: inline-block;
+	color:white;
+}
+.form-control{
+	resize: none
+}
 .navbar {
 	margin-bottom:0;
 	font-family: times new roman;
@@ -34,6 +74,9 @@ ul.dropdown-menu{
 
 
 }
+.main .miga-de-pan li{
+	color:white;
+}
 .main .miga-de-pan ol{
 	background-color:#0B243B;
 }
@@ -57,7 +100,7 @@ ul.dropdown-menu{
 
 }
 .post img{
-	width: 84%;
+	width: 100%;
 }
 .post .post-contenido {
 	margin-top:30px;

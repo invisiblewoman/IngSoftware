@@ -8,34 +8,41 @@
                 <span class="icon-bar"> </span>  
                 <span class="icon-bar"> </span>  
               </button>
+              <%= link_to (image_tag "logo_chico.png", class:"Logo"),questions_url  %> 
 
-              <%= link_to (image_tag "logo.png", alt:"Imagen del Logo", height:40),questions_url, class:"navbar-brand"  %> 
             
           </div>
           <div class="collapse navbar-collapse" id="navegacion-edu">
-              <ul class="nav navbar-nav">
-                
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+              <% if user_signed_in? %>
+                <ul class="nav navbar-nav">
+                  
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
 
-                    Categorias <span class="caret"> </span>
+                      Crear <span class="caret"> </span>
 
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Lo que quieras</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Lo que quieras</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Lo que quieras</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Otro</a></li>
-                <li><a href="#">Contacto</a></li>
-              </ul>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Facultad</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Etiqueta</a></li>>
+                    </ul>
+                  </li>
+                  <li><%= link_to 'Nueva Pregunta', new_question_path %> </li>
+                  <li><a href="#">Contacto</a></li>
+                </ul>
+              <% end %>
               <ul class="nav navbar-nav navbar-right registro form-group">
                   
                   <% if user_signed_in? %>
-                      <%= current_user.email %>
+                    <div class="usuario-logeado">
+                    <% if current_user.nombre == "" and current_user.apellido == "" %>
+                      <p><%= current_user.email %> </p>
+                    <% else %>
+                      <p><%= current_user.full_name %> </p>
+                      <% end %>
+                    </div>
+                      
                       <%= link_to 'Perfil', edit_user_registration_path,class:"btn btn-primary"%> 
                       <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete,class:"btn btn-primary"%> 
                   <% else %>
@@ -58,6 +65,7 @@
       </div>
     </nav>
 
+<<<<<<< HEAD
   </header>
  <!-- <section class="jumbotron">
     <div class="container">
@@ -67,3 +75,6 @@
     </div>
   </section>
 -->
+=======
+  </header>
+>>>>>>> 0a1b7b30030623d0c6cdf2d9cf6d654ef095f252

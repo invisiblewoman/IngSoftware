@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109011628) do
+ActiveRecord::Schema.define(version: 20171116215649) do
+
+  create_table "answer_comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "answer_id"
+    t.integer "user_id"
+    t.string "texto"
+    t.date "fecha"
+    t.index ["answer_id"], name: "index_answer_comments_on_answer_id"
+    t.index ["user_id"], name: "index_answer_comments_on_user_id"
+  end
 
   create_table "answers", force: :cascade do |t|
     t.string "texto"
     t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "question_id"
+    t.integer "user_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -24,6 +39,17 @@ ActiveRecord::Schema.define(version: 20171109011628) do
     t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "question_comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "fecha"
+    t.string "texto"
+    t.integer "user_id"
+    t.integer "question_id"
+    t.index ["question_id"], name: "index_question_comments_on_question_id"
+    t.index ["user_id"], name: "index_question_comments_on_user_id"
   end
 
   create_table "question_tags", force: :cascade do |t|
@@ -40,10 +66,25 @@ ActiveRecord::Schema.define(version: 20171109011628) do
     t.date "fecha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "universities", force: :cascade do |t|
+    t.string "nombre"
+    t.string "ubicacion"
+    t.string "tipo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_universities", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,8 +107,10 @@ ActiveRecord::Schema.define(version: 20171109011628) do
     t.string "foto"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "university_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["university_id"], name: "index_users_on_university_id"
   end
 
 end
