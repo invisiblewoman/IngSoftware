@@ -4,4 +4,5 @@ class Question < ApplicationRecord
 	has_many :tags,through: :question_tags
 	has_many :answer, dependent: :destroy
 	has_many :question_comment,dependent:  :destroy
+	belongs_to :university
 end
