@@ -9,11 +9,11 @@
 
           </ol>
  </div>
- <% cantidad=Question.count %>
+ <% cantidad=@questions.count %>
  <% if cantidad == 0 %>
     <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
 <% else %>
-  <% Question.all.order("created_at desc").each do |pregunta| %>
+  <% @questions.order("created_at desc").each do |pregunta| %>
   <article class="post clearfix">
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
