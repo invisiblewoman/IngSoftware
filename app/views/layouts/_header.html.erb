@@ -54,9 +54,11 @@
                  
               </ul>
 
-              <%= form_tag questions_path, method: :get do %>
-                <%= text_field_tag :buscar, params[:buscar], class:"form-control", placeholder:"buscar"  %>
-                <%= submit_tag "buscar", class:"btn btn-primary" %>
+              <%= form_tag questions_path, method: :get, class:"navbar-form navbar-right", role:"search" do %>
+                <%= text_field_tag :buscar, params[:buscar], class:"form-control", placeholder:"Buscar"  %>
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
 
               <% end %>
               
