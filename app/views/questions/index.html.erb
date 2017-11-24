@@ -6,7 +6,9 @@
     <div class="miga-de-pan">
       <ol class="breadcrumb">
         <li><%= link_to 'Inicio', questions_path%></li>
+
 </ol>
+
 </div>
  <% cantidad=@questions.count %>
  <% if cantidad == 0 %>
@@ -21,7 +23,6 @@
             <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
             <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
-
           </div>
           <p><span class="post-contenido text-justify"><%= sanitize truncate(pregunta.cuerpo, length: 100, escape: false) %></span></p> 
           <br>
@@ -31,8 +32,8 @@
           <% end %>
           <h4>Facultad:</h4>
           <% if not pregunta.university.nil? %>
-          <p><%= pregunta.university.nombre %></span></p>
-        <% end %>
+            <p><%= pregunta.university.nombre %></span></p>
+          <% end %>
           <div class="contenedor-botones">
 
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
