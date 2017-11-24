@@ -4,6 +4,7 @@
           <ol class="breadcrumb">
             <li><%= link_to 'Inicio', questions_path%></li>
             <li><%= @question.titulo %></li>
+            <li><%= link_to 'Editar', edit_question_path(:id => params[:id]) %></li>
           </ol>
  </div>
 <article class="post clearfix">

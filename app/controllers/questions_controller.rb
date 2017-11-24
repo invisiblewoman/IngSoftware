@@ -45,4 +45,14 @@ class QuestionsController < ApplicationController
  		 javascript_tag { tinymce_javascript(config, options) }
 	end
 	
+	def edit
+		@question = Question.find(params[:id])
+	end
+
+	def update
+		@question = Question.find(params[:id])
+		@question.update(titulo: params[:titulo], cuerpo: params[:cuerpo])
+		redirect_to questions_path(@question)
+	end
+
 end
