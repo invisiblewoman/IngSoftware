@@ -4,7 +4,7 @@ class Question < ApplicationRecord
 	has_many :tags,through: :question_tags
 	has_many :answer, dependent: :destroy
 	has_many :question_comment,dependent:  :destroy
-	belongs_to :university
+	belongs_to :university, optional:true 
 	scope :search,->(parametro){
 		where('titulo LIKE ? OR cuerpo LIKE ?', "%#{parametro}%", "%#{parametro}%")
 	}
