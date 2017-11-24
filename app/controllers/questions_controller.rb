@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
 		
 		@question = Question.new(
 		params.require(:question)
-		.permit(:cuerpo,:titulo,tag_ids: [])
+		.permit(:cuerpo,:titulo,:university_id,tag_ids: [])
 		)
 		@question.user = current_user
 		@question.fecha = Time.now 

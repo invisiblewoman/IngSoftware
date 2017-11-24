@@ -1,0 +1,43 @@
+<% if @condicion == "0" %>
+   <div class="alert alert-danger" role="alert">No se pudo seguir la facultad, la misma ya la sigues.</div>
+<% end %>
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path%></li>
+            <li>Seguir-Ver Facultades</li>
+          </ol>
+ </div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-info">
+          <div class="panel-heading">Facultades existentes</div>
+      </div>
+      <% University.all.each do |universidad| %>
+      <div class="panel panel-default">
+          <div class="panel-heading">
+
+            <%= universidad.nombre %>  <%= link_to "",follow_university_path(:id => universidad), class:"glyphicon glyphicon-plus-sign",data:{confirm:"Estas seguro de seguir esta facultad"} %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-info">
+          <div class="panel-heading">Facultades Seguidas</div>
+      </div>
+      <% @seguidos.all.each do |universidadseguida| %>
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= universidadseguida.nombre %> <%= link_to "",unfollow_university_path(:id => universidadseguida), class:"glyphicon glyphicon-remove",data:{confirm:"Estas seguro de dejar de seguir esta facultad"} %>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+</div>

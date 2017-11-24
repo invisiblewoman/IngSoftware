@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116215649) do
+ActiveRecord::Schema.define(version: 20171124035312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 20171116215649) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "university_id"
+    t.index ["university_id"], name: "index_questions_on_university_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -81,15 +83,26 @@ ActiveRecord::Schema.define(version: 20171116215649) do
 
   create_table "universities", force: :cascade do |t|
     t.string "nombre"
-    t.string "ubicacion"
-    t.string "tipo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "tag_id"
+    t.index ["tag_id"], name: "index_user_tags_on_tag_id"
+    t.index ["user_id"], name: "index_user_tags_on_user_id"
   end
 
   create_table "user_universities", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "university_id"
+    t.index ["university_id"], name: "index_user_universities_on_university_id"
+    t.index ["user_id"], name: "index_user_universities_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

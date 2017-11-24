@@ -6,6 +6,10 @@ body{
 	padding-bottom: 60px; 
 }
 
+.probando{
+	background-color: red;
+	float: right;
+}
 .Logo{
 	padding: 0px;
 	margin:5px;

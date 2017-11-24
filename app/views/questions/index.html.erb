@@ -1,3 +1,11 @@
+<% if @condicion == "0" %>
+   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
+<% end %>
+<div class="row">
+  <section class="posts col-md-9" >
+    <div class="miga-de-pan">
+      <ol class="breadcrumb">
+        <li><%= link_to 'Inicio', questions_path%></li>
 
  <% cantidad=@questions.count %>
  <% if cantidad == 0 %>
@@ -12,6 +20,7 @@
             <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
             <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
+<<<<<<< HEAD
           </div>
           <p><span class="post-contenido text-justify"><%= sanitize truncate(pregunta.cuerpo, length: 100, escape: false) %></span></p> 
           <br>
@@ -22,12 +31,55 @@
           <h4>Facultad:</h4>
           <p><%= pregunta.user.university.nombre %></span></p>
           <div class="contenedor-botones">
+=======
+        </div>
+        <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 
+        <br>
+        <h4> Etiquetas:</h4>
+        <% pregunta.tags.each do |tag| %>
+          <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+        <% end %>
+        <h4>Facultad:</h4>
+        <% if not pregunta.university.nil? %>
+          <p><%= pregunta.university.nombre %></span></p>
+        <% end %>
+        <div class="contenedor-botones">
+>>>>>>> 5ac2a892563a86261c2c7a8734d981355ea245ae
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
-           
-            <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
-          </div> 
+             
+          <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
+        </div> 
 
-  </article>
-<% end %>
-<% end %>
+      </article>
+    <% end %>
+  <% end %>
+</section>
+<% if user_signed_in? %>  
+  <aside class="col-md-3 hidden-xs hidden-sm">
+        <h4>Facultades Seguidas</h4>
+        <div class="list-group">
+          <% if current_user.universities.count == 0 %>
+            <a href="" class="list-group-item">No sigues a ninguna facultad</a>
+          <% end %>
+          <% current_user.universities.all.order("created_at desc").each do |universidad| %>
+            <%= link_to universidad.nombre ,  university_path(:id => universidad.id),class:"list-group-item"%>
+          <% end %>
+        </div>
+        
+   
+  </aside>
+  <aside class="col-md-3 hidden-xs hidden-sm">
+        <h4>Etiquetas Seguidas</h4>
+        <div class="list-group">
+          <% if current_user.tags.count == 0 %>
+            <a href="" class="list-group-item">No sigues a ninguna etiqueta</a>
+          <% end %>
+          <% current_user.tags.all.order("created_at desc").each do |tag| %>
+            <%= link_to tag.nombre ,  tag_path(:id => tag.id),class:"list-group-item"%>
+          <% end %>
+        </div>
+        
+   
+</aside>
 
+<% end %>

@@ -3,15 +3,14 @@
         <div class="miga-de-pan">
           <ol class="breadcrumb">
             <li><%= link_to 'Inicio', questions_path%></li>
-            <li>Ver preguntas de <%= @tag.nombre %></li>
+            <li>Ver preguntas de <%= @university.nombre %></li>
           </ol>
  </div>
-<% if @tag.questions.count == 0 %>
+<% if @university.question.count == 0 %>
       <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
 <% else %>
 
-
-  <% @tag.questions.all.order("created_at desc").each do |pregunta| %>
+  <% @university.question.all.order("created_at desc").each do |pregunta| %>
         <article class="post clearfix">
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
