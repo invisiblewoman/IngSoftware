@@ -7,20 +7,20 @@
       <ol class="breadcrumb">
         <li><%= link_to 'Inicio', questions_path%></li>
 
-      </ol>
-    </div>
-   <% cantidad=Question.count %>
-   <% if cantidad == 0 %>
-      <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
-   <% else %>
-      <% Question.all.order("created_at desc").each do |pregunta| %>
-      <article class="post clearfix">
-        <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
-        </a>
-        <div class="encabezado">
-          
-          <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
-          <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
+          </ol>
+ </div>
+ <% cantidad=@questions.count %>
+ <% if cantidad == 0 %>
+    <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
+<% else %>
+  <% @questions.order("created_at desc").each do |pregunta| %>
+  <article class="post clearfix">
+          <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
+          <div class="encabezado">
+        
+            <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
+            <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
         </div>
         <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 

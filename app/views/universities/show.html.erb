@@ -1,3 +1,11 @@
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path%></li>
+            <li>Ver preguntas de <%= @university.nombre %></li>
+          </ol>
+ </div>
 <% if @university.question.count == 0 %>
       <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
 <% else %>
