@@ -17,7 +17,16 @@ Rails.application.routes.draw do
   end
   
   resources :comments
-  
+  resources :universities do
+    get :seguidos, on: :member
+    get :follow, on:   :member
+    get :unfollow, on:   :member
+  end
+  resources :tags do
+    get :seguidos, on: :member
+    get :follow, on:   :member
+    get :unfollow, on:   :member
+  end
   resources :tags
   resources :users
   root 'questions#index'
