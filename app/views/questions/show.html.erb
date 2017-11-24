@@ -99,8 +99,8 @@
       <div class="form-group">
         <%= f.label :texto, "Cuerpo de la respuesta" %><br>
         <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:15 %>
-        <%= tinymce :editor_selector => "alternate" %>
-        <% f.hidden_field :question %>
+        <%= tinymce %>
+        <%= f.hidden_field :question %>
       </div>
       <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
     <% end %>

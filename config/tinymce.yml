@@ -14,19 +14,3 @@ default:
     - textcolor
   menubar: false
 
-alternate:
-  toolbar:
-    - fontselect | fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignjustify alignright
-    - blockquote codesample | link unlink | forecolor backcolor | undo | redo
-   plugins:
-    - link
-    - paste
-    - importcss
-    - autolink
-    - lists
-    - wordcount
-    - colorpicker
-    - code
-    - textcolor
-  menubar: false
-  
