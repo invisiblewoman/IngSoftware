@@ -18,7 +18,9 @@ body{
 .CantRespuestas{
 	padding:7px;
 	font-size:1.2em;
-	margin-top:2px;
+	margin:2px;
+	margin-bottom: 0px!important;
+
 }
 .imagen{
 	padding: 0px;

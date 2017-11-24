@@ -22,7 +22,7 @@
   </div> 
    <div class="checkbox">
     <p>Seleccione su facultad</p> 
-    <%= f.collection_select :university_id, University.all, :id, :nombre, {}, { class:"form-control",required:true  }%>
+    <%= f.collection_select :university_id, University.all, :id, :nombre, {}, { class:"form-control"  }%>
  
   </div> 
     <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>

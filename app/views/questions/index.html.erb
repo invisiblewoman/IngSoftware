@@ -37,6 +37,8 @@
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
              
           <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
+          
+          <p  class="label label-success pull-right CantRespuestas">Votos <span class="badge"><%= pregunta.votes.count %></span></p> 
         </div> 
 
       </article>

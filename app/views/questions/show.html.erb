@@ -20,7 +20,9 @@
             <button type="button" class="btn btn-default"><%= tag.nombre %></button>
           <% end %>
           <h4>Facultad:</h4>
-          <p><%= @question.user.university.nombre %></span></p>
+          <% if not @question.user.university.nil? %>
+            <p><%= @question.user.university.nombre %></span></p>
+          <% end %>
           <% cantidad=@question.question_comment.count %>
           <% if cantidad != 0 %>
             <% @question.question_comment.all.order("created_at desc").each do |questioncomment| %>
