@@ -1,0 +1,32 @@
+default:
+  toolbar:
+    - formatselect | fontselect | fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignjustify alignright | bullist numlist outdent indent 
+    - blockquote codesample | link unlink | forecolor backcolor | undo | redo
+  plugins:
+    - link
+    - paste
+    - importcss
+    - autolink
+    - lists
+    - wordcount
+    - colorpicker
+    - codesample
+    - textcolor
+  menubar: false
+
+alternate:
+  toolbar:
+    - fontselect | fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignjustify alignright
+    - blockquote codesample | link unlink | forecolor backcolor | undo | redo
+   plugins:
+    - link
+    - paste
+    - importcss
+    - autolink
+    - lists
+    - wordcount
+    - colorpicker
+    - code
+    - textcolor
+  menubar: false
+  

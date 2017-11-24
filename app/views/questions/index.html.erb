@@ -1,14 +1,4 @@
-<% if @condicion == "0" %>
-   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
-<% end %>
-<div class="row">
-      <section class="posts col-md-9" >
-        <div class="miga-de-pan">
-          <ol class="breadcrumb">
-            <li><%= link_to 'Inicio', questions_path%></li>
 
-          </ol>
- </div>
  <% cantidad=@questions.count %>
  <% if cantidad == 0 %>
     <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
@@ -23,7 +13,7 @@
             <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
           </div>
-          <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 
+          <p><span class="post-contenido text-justify"><%= sanitize truncate(pregunta.cuerpo, length: 100, escape: false) %></span></p> 
           <br>
           <h4> Etiquetas:</h4>
           <% pregunta.tags.each do |tag| %>

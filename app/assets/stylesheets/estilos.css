@@ -104,6 +104,9 @@ ul.dropdown-menu{
 .post img{
 	width: 100%;
 }
+.post .post-fondo {
+	background-color: #000000;
+}
 .post .post-contenido {
 	margin-top:30px;
 }

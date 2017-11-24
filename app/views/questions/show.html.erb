@@ -13,7 +13,7 @@
             <h3 class="post-title"><a href="#"><%= @question.titulo %></a></h3>
             <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.user.full_name %> </a></span></p>
           </div>
-          <p class="post-contenido text-justify"><%= @question.cuerpo %></p>  
+          <p class="post-contenido text-justify"><%= sanitize @question.cuerpo %></p>  
           <br>
           <h4> Etiquetas:</h4>
           <% @question.tags.each do |tag| %>
@@ -55,11 +55,10 @@
  <% if cantidad != 0 %>
   <% @question.answer.all.order("created_at desc").each do |answer| %>
   <article class="post clearfix">
-          <div class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
-          </div>
+          <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
-            <p><span class="post-fecha"><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %> </a></span></p>
-               <p><span class="post-contenido text-justify"><%= answer.texto %></span></p>
+            <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %> </a></span></p>
+               <p><span class="post-contenido text-justify "><%= sanitize answer.texto %></span></p>
             <br>
           </div>
           
@@ -98,7 +97,8 @@
     <%= form_for [@question,@answer] do |f| %>
       <div class="form-group">
         <%= f.label :texto, "Cuerpo de la respuesta" %><br>
-        <%= f.text_area :texto ,class: "form-control", placeholder: "Escriba su respuesta",rows:8, required:true %>
+        <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:15 %>
+        <%= tinymce :editor_selector => "alternate" %>
         <% f.hidden_field :question %>
       </div>
       <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
