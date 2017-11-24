@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 	belongs_to :university, optional: true
+  has_many   :votes
   has_many   :user_universities
   has_many   :user_tags
   has_many   :universities, through: :user_universities
