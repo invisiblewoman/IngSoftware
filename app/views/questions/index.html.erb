@@ -20,7 +20,6 @@
             <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
             <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
-<<<<<<< HEAD
           </div>
           <p><span class="post-contenido text-justify"><%= sanitize truncate(pregunta.cuerpo, length: 100, escape: false) %></span></p> 
           <br>
@@ -29,22 +28,11 @@
             <button type="button" class="btn btn-default"><%= tag.nombre %></button>
           <% end %>
           <h4>Facultad:</h4>
-          <p><%= pregunta.user.university.nombre %></span></p>
+          <% if not pregunta.university.nil? %>
+            <p><%= pregunta.university.nombre %></span></p>
+          <% end %>
           <div class="contenedor-botones">
-=======
-        </div>
-        <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 
-        <br>
-        <h4> Etiquetas:</h4>
-        <% pregunta.tags.each do |tag| %>
-          <button type="button" class="btn btn-default"><%= tag.nombre %></button>
-        <% end %>
-        <h4>Facultad:</h4>
-        <% if not pregunta.university.nil? %>
-          <p><%= pregunta.university.nombre %></span></p>
-        <% end %>
-        <div class="contenedor-botones">
->>>>>>> 5ac2a892563a86261c2c7a8734d981355ea245ae
+
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
              
           <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
