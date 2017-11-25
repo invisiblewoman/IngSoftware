@@ -27,7 +27,14 @@
     <p>Seleccione su etiqueta (Debe seleccionar como minimo una etiqueta y como maximo cinco)</p> 
     <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control",required:true  }%>
  
+   </div> 
+   <div class="checkbox">
+    <p>Seleccione la facultad</p> 
+    <%= f.collection_select :university_id, University.all, :id, :nombre, {}, { class:"form-control",required:true  }%>
+ 
   </div> 
-    <%= f.submit "Enviar Pregunta", class:"btn btn-default" %>
+
+  </div> 
+    <%= f.submit "Guardar Cambios", class:"btn btn-default" %>
 <% end %>
 

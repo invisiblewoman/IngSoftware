@@ -19,8 +19,8 @@
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
-        
-            <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
+            
+            <h3 class="post-title"><%= link_to pregunta.titulo, question_path(:id => pregunta.id, editar:0)%></h3>
             <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
 
           </div>
@@ -36,7 +36,7 @@
           <% end %>
           <div class="contenedor-botones">
 
-          <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
+          <%= link_to 'Leer Mas', question_path(:id => pregunta.id, editar:0),class:"btn btn-primary pull-right"%>
              
           <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
         </div> 

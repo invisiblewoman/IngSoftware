@@ -1,3 +1,4 @@
+   <% binding.pry %>
 <div class="row">
       <section class="posts col-md-9" >
         <div class="miga-de-pan">
@@ -61,8 +62,12 @@
   <article class="post clearfix">
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
-            <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %> </a></span></p>
-               <p><span class="post-contenido text-justify "><%= sanitize answer.texto %></span></p>
+            
+            <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %><%= link_to 'Editar', edit_answer_path(:id => answer.id)%> </a></span></p>
+              
+             
+                <p><span class="post-contenido text-justify "><%= sanitize answer.texto %></span></p>
+             
             <br>
           </div>
           
@@ -94,11 +99,25 @@
 <% end %>
 
 <% if user_signed_in? %>
- <% @cantidad = @question.answer.where(user: current_user.id).count %> 
- 
+<%if params[:editar] == 0 %>
+  <% @cantidad = @question.answer.where(user: current_user.id).count %> 
   <%if @cantidad == 0 %>
-    <% @answer = Answer.new %>  
-    <%= form_for [@question,@answer] do |f| %>
+      <% @answer = Answer.new %>  
+      <%= form_for [@question,@answer] do |f| %>
+        <div class="form-group">
+          <%= f.label :texto, "Cuerpo de la respuesta" %><br>
+          <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:15 %>
+          <%= tinymce %>
+          <%= f.hidden_field :question %>
+        </div>
+        <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
+      <% end %>
+  <% else %>
+  <div class="alert alert-danger" role="alert">Disculpe, solo se puede realizar una respuesta por pregunta</div>
+  <% end %>
+<% else %> 
+      <% @answer = @answer %>
+      <%= form_for [@question,@answer] do |f| %>
       <div class="form-group">
         <%= f.label :texto, "Cuerpo de la respuesta" %><br>
         <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:15 %>
@@ -106,9 +125,8 @@
         <%= f.hidden_field :question %>
       </div>
       <%= f.submit "Enviar Respuesta", class:"btn btn-default"  %>
+      <% end %>
     <% end %>
-    <% else %>
-  <div class="alert alert-danger" role="alert">Disculpe, solo se puede realizar una respuesta por pregunta</div>
-  <% end %>
+ 
 
 <% end %>

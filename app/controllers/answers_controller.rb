@@ -30,12 +30,20 @@ class AnswersController < ApplicationController
  
 
   end
+
   def edit
+    
+    @answer =  Answer.find(params[:id])
+    @editar = 1
+    redirect_to question_path(@answer.question.id, editar: 1 , @answer => @answer)
+    
   end
 
-  
-
   def update
+    binding.pry
+      @answer =  Answer.find(params[:id])
+     @answer.update(texto: params[:answer][:texto])
+     redirect_to question_path(params[:question_id], editar: 0)
   end
 
   def destroy

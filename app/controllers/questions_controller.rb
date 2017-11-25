@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
 		if @question.save
 			if @question.tags.count > 5 then
 				@question.destroy
-				redirect_to new_question_path(:condicion => 0)
+				redirect_to new_question_path(condicion: 0)
 			else
 				redirect_to questions_path
 			end
@@ -57,3 +57,4 @@ class QuestionsController < ApplicationController
 	end
 
 end
+
