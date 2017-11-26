@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
       @answer.fecha = Time.now 
       @answer.save
     end
-      redirect_to question_path(params[:question_id])
+      redirect_to question_path(params[:question_id],:condicion => "0")
 
  
 

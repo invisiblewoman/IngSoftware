@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
 		end
 	end
 	def show
+		@condicion = params[:condicion]
 		@question = Question.find(params[:id])
 	end 
 	def destroy

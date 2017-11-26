@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     get :follow, on:   :member
     get :unfollow, on:   :member
   end
+  resources :votes do
+    get :voteQuestion
+  end
   resources :tags
   resources :users
   root 'questions#index'

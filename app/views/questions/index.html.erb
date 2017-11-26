@@ -20,7 +20,7 @@
           <div class="encabezado">
         
             <h3 class="post-title"><a href="#"><%= pregunta.titulo %></a></h2>
-            <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a></span></p>
+            <p><span class="post-fecha"><%= pregunta.fecha %></span> por <span class="post-autor"><a href="#"> <%= pregunta.user.full_name %> </a> </span></p>
 
         </div>
         <p><span class="post-contenido text-justify"><%= truncate(pregunta.cuerpo, length: 150) %></span></p> 
@@ -34,11 +34,19 @@
           <p><%= pregunta.university.nombre %></span></p>
         <% end %>
         <div class="contenedor-botones">
-          <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
+          <%= link_to 'Leer Mas', question_path(:id => pregunta.id,:condicion => "0"),class:"btn btn-primary pull-right"%>
              
           <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
           
-          <p  class="label label-success pull-right CantRespuestas">Votos <span class="badge"><%= pregunta.votes.count %></span></p> 
+           <div class="votos pull-right">
+              <p>
+                <%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= pregunta.votes.positive.count %></span>
+              </p>
+              <span style="border-left: 2px solid black;margin:1px"></span>
+              <p>
+                <%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= pregunta.votes.negative.count %></span>
+              </p>
+          </div> 
         </div> 
 
       </article>

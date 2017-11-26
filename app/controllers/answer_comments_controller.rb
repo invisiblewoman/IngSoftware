@@ -23,7 +23,7 @@ class AnswerCommentsController < ApplicationController
     @answerComment.fecha = Time.now 
     @answerComment.save
  
-    redirect_to question_path(Answer.find(params[:answer_id]).question.id)
+    redirect_to question_path(Answer.find(params[:answer_id]).question.id,:condicion => "0")
 
  
 
