@@ -18,7 +18,23 @@ body{
 .CantRespuestas{
 	padding:7px;
 	font-size:1.2em;
-	margin-top:2px;
+	margin:2px;
+	margin-bottom: 0px!important;
+
+}
+.votos a{
+	margin:1px;
+}
+.votos p{
+	margin:2px;
+	margin-top:3px!important;
+	display:inline-block;
+}
+.positive{
+	background-color: green;
+}
+.negative{
+	background-color: red;
 }
 .imagen{
 	padding: 0px;

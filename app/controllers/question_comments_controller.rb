@@ -23,7 +23,7 @@ class QuestionCommentsController < ApplicationController
     @question_comment.fecha = Time.now 
     @question_comment.save
  
-    redirect_to question_path(params[:question_id])
+    redirect_to question_path(params[:question_id],:condicion => "0")
 
  
 

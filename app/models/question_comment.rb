@@ -1,4 +1,5 @@
 class QuestionComment < ApplicationRecord
 	belongs_to :question
 	belongs_to :user
+	has_many   :votes,dependent: :destroy, as: :votable
 end

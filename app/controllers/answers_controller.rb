@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
       @answer.fecha = Time.now 
       @answer.save
     end
-      redirect_to question_path(params[:question_id])
+      redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
 
  
 
@@ -34,16 +34,14 @@ class AnswersController < ApplicationController
   def edit
     
     @answer =  Answer.find(params[:id])
-    @editar = 1
-    redirect_to question_path(@answer.question.id, editar: 1 , @answer => @answer)
+    redirect_to question_path(@answer.question.id,:condicion => "0", :editar => "1", :ida => params[:id] )
     
   end
 
   def update
-    binding.pry
-      @answer =  Answer.find(params[:id])
+     @answer =  Answer.find(params[:id])
      @answer.update(texto: params[:answer][:texto])
-     redirect_to question_path(params[:question_id], editar: 0)
+     redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
   end
 
   def destroy

@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
 		end
 	end
 	def show
+		@condicion = params[:condicion]
+		@editar = params[:editar]
 		@question = Question.find(params[:id])
 	end 
 	def destroy
@@ -52,8 +54,12 @@ class QuestionsController < ApplicationController
 	def update
 		@question = Question.find(params[:id])
 		
-		@question.update(titulo: params[:question][:titulo], cuerpo: params[:question][:cuerpo])
-		redirect_to questions_path(@question)
+		@question.update(titulo: params[:question][:titulo], 
+						cuerpo: params[:question][:cuerpo], 
+						tag_ids: params[:question][:tag_ids],
+						university_id: params[:question][:university_id]
+						)
+		redirect_to question_path(@question.id,:condicion => "0", :editar => "0")
 	end
 
 end
