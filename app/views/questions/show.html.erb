@@ -16,14 +16,20 @@
           <ol class="breadcrumb">
             <li><%= link_to 'Inicio', questions_path%></li>
             <li><%= @question.titulo %></li>
-            <li><%= link_to 'Editar', edit_question_path(:id => params[:id]) %></li>
+           
           </ol>
  </div>
 <article class="post clearfix">
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
-            <h3 class="post-title"><a href="#"><%= @question.titulo %></a></h3>
+
+           <%if current_user == @question.user%> 
+            <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %></h3>
+            <% else %>
+              <h3 class="post-title"><%= @question.titulo %></h3>
+            <% end %>
+
             <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.user.full_name %> </a> Puntos: <%= @question.user.votos %></span></p>
 
 
@@ -115,9 +121,14 @@
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
-            
-            <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %><%= link_to 'Editar', edit_answer_path(:id => answer.id)%> </a>Puntos: <%= @question.user.votos %></span></p>
+          <%if current_user == answer.user%>
+             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+          <% else %>
+             <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+              <% end %>
+    
 
+<% if @editar != "1" or current_user != answer.user %>
                 <p><span class="post-contenido text-justify "><%= sanitize answer.texto %></span></p>
              
             <br>
@@ -147,7 +158,8 @@
             <% end %>
 
           </div>
-          
+
+
           <% cantidad=answer.answer_comment.count %>
           <% if cantidad != 0 %>
             <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
@@ -191,13 +203,27 @@
               </div>
             <% end %>
           <% end %>
+  <% else %>
+</br>
+  <% @answer = Answer.find(params[:ida]) %>
+        <%= form_for [@question,@answer] do |f| %>
+        <div class="form-group">
+          <%= f.label :texto, "Editar respuesta" %><br>
+          <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:5 %>
+          <%= tinymce %>
+          <%= f.hidden_field :question %>
+        </div>
+        <%= f.submit "Guardar Cambios", class:"btn btn-default"  %>
+        <% end %>
+<% end %>
+
   </article>
 
 <% end %>
 <% end %>
 
 <% if user_signed_in? %>
-<% if @editar != "1" %>
+
   <% @cantidad = @question.answer.where(user: current_user.id).count %> 
   <%if @cantidad == 0 %>
       <% @answer = Answer.new %>  
@@ -213,16 +239,4 @@
   <% else %>
      <div class="alert alert-danger" role="alert">Disculpe, solo se puede realizar una respuesta por pregunta</div>
   <% end %>
-<% else %> 
-      <% @answer = Answer.find(params[:ida]) %>
-      <%= form_for [@question,@answer] do |f| %>
-      <div class="form-group">
-        <%= f.label :texto, "Cuerpo de la respuesta" %><br>
-        <%= f.text_area :texto, :class => "tinymce", placeholder: "Escriba su respuesta",rows:15 %>
-        <%= tinymce %>
-        <%= f.hidden_field :question %>
-      </div>
-      <%= f.submit "Guardar Cambios", class:"btn btn-default"  %>
-      <% end %>
-    <% end %>
 <% end %>
