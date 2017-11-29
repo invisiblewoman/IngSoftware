@@ -67,7 +67,29 @@
           <% if cantidad != 0 %>
             <% @question.question_comment.all.order("created_at desc").each do |questioncomment| %>
               <div class="alert alert-success" role="alert">
-                <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+
+                <% if current_user != questioncomment.user %>
+                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+                <% else %>
+                 
+                 <% if @editar != "2" or questioncomment.id.to_s != params[:ida] %>
+
+                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id), class:"btn btn-default  pull-right" %>
+                <% else %>
+                      <% @question_comment= QuestionComment.find(params[:ida]) %>
+                      <%= form_for [@question,@question_comment] do |g| %>
+                        <div class="form-group">
+                          <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                          <% g.hidden_field :question %>
+                          <div class="input-group-btn">
+                            <%= g.submit "Guardar cambios", class:"btn btn-default"  %>
+                          </div>                          
+                        </div>
+                      <% end %>
+                <% end %>
+
+
+                <% end %>
                 <% if user_signed_in? %>
                   <div class="votos pull-right">
                     <p>
@@ -148,7 +170,28 @@
               <% if cantidad != 0 %>
                 <% @answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
-                   <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                <% if current_user != answercomment.user %>
+                    <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                <% else %>
+
+                 <% if @editar != "3" %>
+
+                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %>
+                  <% else %>
+                      <% @answerComment= AnswerComment.find(:ida) %>
+                      <%= form_for [@answer,@answerComment] do |g| %>
+                        <div class="form-group">
+                          <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                          <% g.hidden_field :answer %>
+                          <div class="input-group-btn">
+                            <%= g.submit "Guardar cambios", class:"btn btn-default"  %>
+                          </div>
+                          
+                        </div>
+                      <% end %>
+                  <% end %>
+                <% end %>
+
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
                         <p>
@@ -254,7 +297,29 @@
               <% if cantidad != 0 %>
                 <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
-                   <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                   <% if current_user != answercomment.user %>
+                    <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                <% else %>
+             
+                 <% if @editar != "3" or answercomment.id.to_s != params[:ida] %>
+
+                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %>
+                  <% else %>
+                   
+                      <% @answerComment= AnswerComment.find(params[:ida]) %>
+                      <% @answer = answer %>
+                      <%= form_for [@answer,@answerComment] do |g| %>
+                        <div class="form-group">
+                          <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                          <% g.hidden_field :answer %>
+                          <div class="input-group-btn">
+                            <%= g.submit "Guardar cambios", class:"btn btn-default"  %>
+                          </div>
+                          
+                        </div>
+                      <% end %>
+                  <% end %>
+                <% end %>
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
                         <p>
