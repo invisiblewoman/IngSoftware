@@ -30,6 +30,7 @@ class QuestionsController < ApplicationController
 		)
 		@question.user = current_user
 		@question.fecha = Time.now 
+		@question.bestAnswer = 0
 		if @question.save
 			if @question.tags.count > 5 then
 				@question.destroy
@@ -42,6 +43,7 @@ class QuestionsController < ApplicationController
 			render :new
 		end
 	end
+
 
 	def tinymce(config=:default, options={})
  		 javascript_tag { tinymce_javascript(config, options) }
@@ -62,5 +64,16 @@ class QuestionsController < ApplicationController
 		redirect_to question_path(@question.id,:condicion => "0", :editar => "0")
 	end
 
+	def bestAnswer
+
+		@question=Question.find(params[:question])
+		if current_user == @question.user
+			if @question.user != Answer.find(params[:answer]).user
+				@question.bestAnswer=params[:answer]
+				@question.save
+			end
+		end
+		redirect_to question_path(:id => @question.id,:condicion => "0")
+	end
 end
 

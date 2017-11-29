@@ -106,18 +106,100 @@
               <% end %>
           <% end %>
   </article>
-   <% cantidad=@question.answer.count %>
+  
+<% if @question.bestAnswer != 0 %>
+  <h3> <span class="label label-default">Mejor respuesta</span></h3>
+  <% @answer = Answer.find(@question.bestAnswer) %>
+      <article class="post clearfix">
+              <div class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+              </div>
+              <div class="encabezado">
+                <p><span class="post-fecha"><%= @answer.fecha %> por <span class="post-autor"><a href="#"><%= @answer.user.full_name %> </a> Puntos: <%= @question.user.votos %></span></p>
+                   <p><span class="post-contenido text-justify"><%=sanitize @answer.texto %></span></p>
+                <br>
+                <% if user_signed_in? %>  
+
+                  <div class="votos pull-right">
+                    <p>
+                      <%= link_to "",new_vote_path(:valor => true,:id => @answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= @answer.votes.positive.count %></span>
+                    </p>
+                    <span style="border-left: 2px solid black;margin:1px"></span>
+                    <p>
+                      <%= link_to "",new_vote_path(:valor => false,:id => @answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= @answer.votes.negative.count %></span>
+                    </p>
+                  </div>
+
+                <% else %>
+                  <div class="votos pull right">
+                     <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= @answer.votes.positive.count %></span></p>
+
+                    <span style="border-left: 2px solid black;margin:1px"></span>
+
+                    <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= @answer.votes.negative.count %></span>             
+                    
+                  </div>  
+                 
+
+                <% end %>
+
+              </div>
+              
+              <% cantidad=@answer.answer_comment.count %>
+              <% if cantidad != 0 %>
+                <% @answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
+                  <div class="alert alert-success" role="alert">
+                   <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                   <% if user_signed_in? %>
+                      <div class="votos pull-right">
+                        <p>
+                          <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
+                        </p>
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+                        <p>
+                          <%= link_to "",new_vote_path(:valor => false,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                        </p>
+                      </div>
+                    <% else %>
+                      <div class="votos pull-right">
+                        <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answercomment.votes.positive.count %></span></p>
+                      
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+
+                        <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                      </div>
+                     
+
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end  %>
+              <% if user_signed_in? %>
+                <% @answerComment= AnswerComment.new %>
+                <%= form_for [@answer,@answerComment] do |g| %>
+                  <div class="form-group">
+                    <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                    <% g.hidden_field :answer %>
+                    <div class="input-group-btn">
+                      <%= g.submit "Comentar", class:"btn btn-default"  %>
+                    </div>
+                    
+                  </div>
+                <% end %>
+              <% end %>
+      </article>
+<% end %>  
+<% cantidad=@question.answer.count %>
   <div class="Cant-respuestas">
     <p  class="label label-success pull-left CantRespuestas">Respuestas <span class="badge"><%= cantidad %></span></p>
     </br>
     </br>
     
-  </div>
-    
-   
+</div>
+
  <% if cantidad != 0 %>
   <% @question.answer.all.order("created_at desc").each do |answer| %>
   <article class="post clearfix">
+   <% if answer.id != @question.bestAnswer %>
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
@@ -134,75 +216,84 @@
             <br>
             <% if user_signed_in? %>
 
-              <div class="votos pull-right">
-                <p>
-                  <%= link_to "",new_vote_path(:valor => true,:id => answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answer.votes.positive.count %></span>
-                </p>
-                <span style="border-left: 2px solid black;margin:1px"></span>
-                <p>
-                  <%= link_to "",new_vote_path(:valor => false,:id => answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answer.votes.negative.count %></span>
-                </p>
-              </div>
-
-            <% else %>
-              <div class="votos pull right">
-                 <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answer.votes.positive.count %></span></p>
-
-                <span style="border-left: 2px solid black;margin:1px"></span>
-
-                <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answer.votes.negative.count %></span>
-                
-              </div>  
-             
-
-            <% end %>
-
-          </div>
-
-
-          <% cantidad=answer.answer_comment.count %>
-          <% if cantidad != 0 %>
-            <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
-              <div class="alert alert-success" role="alert">
-               <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
-               <% if user_signed_in? %>
                   <div class="votos pull-right">
                     <p>
-                      <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
+                      <%= link_to "",new_vote_path(:valor => true,:id => answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answer.votes.positive.count %></span>
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_vote_path(:valor => false,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                      <%= link_to "",new_vote_path(:valor => false,:id => answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answer.votes.negative.count %></span>
                     </p>
+                    <% if current_user == @question.user %>
+                      <% if @question.user != answer.user %>
+                        <p>
+                          <%= link_to "",question_bestAnswer_path(current_user,:answer => answer,:question => @question), class:"glyphicon glyphicon glyphicon-star-empty" ,data:{confirm:"Estas seguro de elegir como favorito esta respuesta"}%>
+                        </p>
+                      <% end %>
+                    <% end %>
                   </div>
+
                 <% else %>
-                  <div class="votos pull-right">
-                    <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answercomment.votes.positive.count %></span></p>
-                  
+                  <div class="votos pull right">
+                     <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answer.votes.positive.count %></span></p>
+
                     <span style="border-left: 2px solid black;margin:1px"></span>
 
-                    <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
-                  </div>
+                    <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answer.votes.negative.count %></span>             
+                    
+                  </div>  
                  
 
                 <% end %>
+
               </div>
-            <% end %>
-          <% end  %>
-          <% if user_signed_in? %>
-            <% @answerComment= AnswerComment.new %>
-            <% @answer = answer %>
-            <%= form_for [@answer,@answerComment] do |g| %>
-              <div class="form-group">
-                <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
-                <% g.hidden_field :answer %>
-                <div class="input-group-btn">
-                  <%= g.submit "Comentar", class:"btn btn-default"  %>
-                </div>
-                
-              </div>
-            <% end %>
-          <% end %>
+
+
+                 
+              <% cantidad=answer.answer_comment.count %>
+              <% if cantidad != 0 %>
+                <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
+                  <div class="alert alert-success" role="alert">
+                   <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                   <% if user_signed_in? %>
+                      <div class="votos pull-right">
+                        <p>
+                          <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
+                        </p>
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+                        <p>
+                          <%= link_to "",new_vote_path(:valor => false,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                        </p>
+                      </div>
+                    <% else %>
+                      <div class="votos pull-right">
+                        <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answercomment.votes.positive.count %></span></p>
+                      
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+
+                        <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                      </div>
+                     
+
+
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end  %>
+              <% if user_signed_in? %>
+                <% @answerComment= AnswerComment.new %>
+                <% @answer = answer %>
+                <%= form_for [@answer,@answerComment] do |g| %>
+                  <div class="form-group">
+                    <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                    <% g.hidden_field :answer %>
+                    <div class="input-group-btn">
+                      <%= g.submit "Comentar", class:"btn btn-default"  %>
+                    </div>
+                    
+                  </div>
+                <% end %>
+              <% end %>
   <% else %>
 </br>
   <% @answer = Answer.find(params[:ida]) %>
@@ -217,8 +308,10 @@
         <% end %>
 <% end %>
 
-  </article>
 
+
+      </article>
+    <% end %>
 <% end %>
 <% end %>
 

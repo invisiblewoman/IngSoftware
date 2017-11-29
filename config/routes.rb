@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :questions do
    resources :answers 
    resources :question_comments, controller: "question_comments"
+   get :bestAnswer
     
   
   end
