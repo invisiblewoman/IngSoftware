@@ -46,7 +46,7 @@
               <h3 class="post-title"><%= @question.titulo %></h3>
             <% end %>
 
-            <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><a href="#"><%= @question.user.full_name %> </a> Puntos: <%= @question.user.votos %></span></p>
+            <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><%= link_to @question.user.full_name, perfil_path(@question.user.id) %> Puntos: <%= @question.user.votos %></span></p>
 
 
           </div>
@@ -157,9 +157,9 @@
           <div class="encabezado">
 
           <%if current_user == @answer.user%>
-             <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><a href="#"><%= @answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+             <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %> Puntos: <%= @question.user.votos %></span></p>
           <% else %>
-             <p><span class="post-fecha "> <%= @answer.fecha %> por <span class="post-autor"><a href="#"><%= @answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+             <p><span class="post-fecha "> <%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %> Puntos: <%= @question.user.votos %></span></p>
               <% end %>
     
 
@@ -305,9 +305,9 @@
           <div class="encabezado">
 
           <%if current_user == answer.user%>
-             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a>Puntos: <%= @question.user.votos %></span></p>
           <% else %>
-             <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><a href="#"><%= answer.user.full_name %></a>Puntos: <%= @question.user.votos %></span></p>
+             <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %> Puntos: <%= @question.user.votos %></span></p>
               <% end %>
     
 

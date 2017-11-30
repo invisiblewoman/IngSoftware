@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 puts "Borro todo lo que hay"
 User.destroy_all
 Question.destroy_all
@@ -35,8 +27,6 @@ Permiso.find_or_create_by(nombre:"Preguntar",tipo:"Ganancia")
 Permiso.find_or_create_by(nombre:"Responder",tipo:"Ganancia")
 Permiso.find_or_create_by(nombre:"Mejor Respuesta",tipo:"Ganancia")
 
-
-
 puts "Creo Universidades"
 University.find_or_create_by(nombre: "Ninguna")
 University.find_or_create_by(nombre: "Facultad de Ingeniería")
@@ -49,6 +39,13 @@ University.find_or_create_by(nombre: "Facultad de Cs. Veterinarias")
 University.find_or_create_by(nombre: "Facultad de Humanidades y Cs. de la Educación")
 University.find_or_create_by(nombre: "Facultad de Informática")
 University.find_or_create_by(nombre: "Otra")
+
+
+
+
+
+
+
 
 puts "Creo etiquetas"
 Tag.find_or_create_by(nombre: "Informatica")
@@ -68,9 +65,9 @@ Tag.find_or_create_by(nombre: "Biologia")
 Tag.find_or_create_by(nombre: "Robotica")
 
 puts "Creo usuarios"
-User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd", votos: 100000)
-User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd", votos: 100000)
-User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd", votos: 100000)
+User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd", descripcion:"Todo vale la pena si hace reir -LVP", votos: 100000)
+User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd", descripcion:"Madreselva hasta la muerte, Lobos manda La Plata OBDC", votos: 100000)
+User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd", descripcion:"Pole, comer, dormir, repetir", votos: 100000)
 
 puts "Creo Preguntas"
 Question.find_or_create_by(titulo: "¿Para ser genio hay que estar loco?", cuerpo: "Me entro la duda, siempre veo algun genio que esta pirado y quiero saber si voy por buen camino", user_id: 2, university_id: 10, fecha: Time.now )
@@ -86,11 +83,20 @@ Answer.find_or_create_by(texto: "Mmmm para mi que tenes que estar medio chifaldo
 Answer.find_or_create_by(texto: "Porque allí la dermis y epidermis son más gruesas (están pensadas para apoyar) y absorben más agua. Ambas capas de piel están casi pegadas en estas zonas, y no cabe mucho líquido entre las dos, así que la epidermis se hincha. ", question_id: 3, user_id: 1 )
 Answer.find_or_create_by(texto: "Los dedos son como una esponja, absorben y se ponen asi porque tiene mucha agua", question_id: 3, user_id: 2 )
 
+puts "Asocio preguntas y etiquetas"
 QuestionTag.find_or_create_by(question_id: 1,tag_id: 14)
-QuestionTag.find_or_create_by(question_id: 1,tag_id: 8)
+QuestionTag.find_or_create_by(question_id: 1,tag_id: 9)
 QuestionTag.find_or_create_by(question_id: 2,tag_id: 1)
 QuestionTag.find_or_create_by(question_id: 2,tag_id: 2)
 QuestionTag.find_or_create_by(question_id: 3,tag_id: 4)
-QuestionTag.find_or_create_by(question_id: 3,tag_id: 8)
+QuestionTag.find_or_create_by(question_id: 3,tag_id: 15)
 QuestionTag.find_or_create_by(question_id: 4,tag_id: 14)
-QuestionTag.find_or_create_by(question_id: 4,tag_id: 13)
+QuestionTag.find_or_create_by(question_id: 4,tag_id: 15)
+
+puts "Asocio usuario y etiquetas "
+UserTag.find_or_create_by(user_id:1,tag_id:1)
+UserTag.find_or_create_by(user_id:1,tag_id:15)
+UserTag.find_or_create_by(user_id:2,tag_id:2)
+UserTag.find_or_create_by(user_id:2,tag_id:9)
+UserTag.find_or_create_by(user_id:3,tag_id:4)
+UserTag.find_or_create_by(user_id:3,tag_id:14)

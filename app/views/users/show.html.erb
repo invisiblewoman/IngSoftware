@@ -5,5 +5,34 @@
 
     <h4>	<%=@user.descripcion %></h4>
  
-etiquetas uqe sigo </br>
-Listado de preugntas
+
+ </br>
+
+<h4> Etiquetas seguidas</h4>
+  
+	<%@user.tags.each do |tag|%>
+ 		<%= link_to tag.nombre , tag_path(:id => tag.id),class:"btn btn-default"%> 
+ 	<% end %>
+
+</br>
+</br>
+<table class="table table-hover">
+	<tr>
+		<th>Pregunta</th>
+		<th>Respuestas</th>
+		<th>Votos</th>
+	</tr>
+	<%@user.questions.each do |question|%>
+		<tr>
+			<td class="col-md-6"> <%= link_to question.titulo , question_path(:id => question.id,:condicion => "0")%> </td>
+			<td class="col-md-3"> <%= question.answer.count %> </td>
+			<td class="col-md-3">
+              
+             	<%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-up" %> <span class="badge positive"> <%= question.votes.positive.count %> </span>
+              <span style="border-left: 2px solid black; margin:1px"> </span>
+             	<%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-down" %> <span class="badge negative"> <%= question.votes.negative.count %> </span>
+              
+           </td>
+		</tr>
+	<% end %>
+</table>

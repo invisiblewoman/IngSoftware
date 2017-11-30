@@ -1,6 +1,6 @@
 /* Header */
 body{
-	font-family: Calibri;
+	font-family: Arial;
 	background-color: #E6E6E6;
 	position: relative;
 	padding-bottom: 60px; 
@@ -76,12 +76,12 @@ body{
 }
 .navbar {
 	margin-bottom:0;
-	font-family: Calibri;
+	font-family: Arial;
 	background-color: #0B243B;
 
 }
 .jumbotron {
-	font-family: Calibri;
+	font-family: Arial;
 	padding:5px 0;
 	background-color: #E6E6E6;
 }

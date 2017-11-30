@@ -28,7 +28,7 @@
         <br>
         <h4> Etiquetas:</h4>
         <% pregunta.tags.each do |tag| %>
-          <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+          <%= link_to tag.nombre , tag_path(:id => tag.id),class:"btn btn-default"%>
         <% end %>
         <h4>Facultad:</h4>
         <% if not pregunta.university.nil? %>
