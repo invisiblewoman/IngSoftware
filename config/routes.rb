@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   resources :votes do
     get :voteQuestion
   end
+  resources :permisos do
+  end
   resources :tags
   resources :users
   root 'questions#index'

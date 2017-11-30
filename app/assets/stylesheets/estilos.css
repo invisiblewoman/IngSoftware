@@ -5,8 +5,13 @@ body{
 	position: relative;
 	padding-bottom: 60px; 
 }
-
-
+.number_field{
+	background-color: white;
+	display: inline-block;
+}
+.administrar{
+	margin-left: 10px;
+}
 .Logo{
 	padding: 0px;
 	margin:5px;

@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   before_action :authenticate_user!
   def index
-
+    @condicion = params[:condicion ]
   end
 
   def show
@@ -52,17 +52,24 @@ class TagsController < ApplicationController
     .permit(:nombre)
     )
     @cantidad=Tag.where(nombre: @tag.nombre).count
-    
-    if @cantidad == 0 
-      if @tag.save
-      
-        redirect_to tags_path(:condicion => 1)
+    @Puede=Permiso.where(nombre:"Crear Etiqueta",tipo:"Necesario").first.cantidad
+    @ganancia=Permiso.where(nombre:"Crear Etiqueta",tipo:"Ganancia").first.cantidad
+    if current_user.votos > @Puede
+      if @cantidad == 0 
+        if @tag.save
+          current_user.votos= current_user.votos + @ganancia
+          byebug
+          current_user.save
+          redirect_to tags_path(:condicion => 1)
 
+        else
+          render :new
+        end
       else
-        render :new
+        redirect_to tags_path(:condicion => 0)
       end
     else
-      redirect_to tags_path(:condicion => 0)
+      redirect_to tags_path(:condicion => 2)
     end
   end
 
