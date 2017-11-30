@@ -1,6 +1,6 @@
 /* Header */
 body{
-	font-family: times new roman;
+	font-family: Calibri;
 	background-color: #E6E6E6;
 	position: relative;
 	padding-bottom: 60px; 
@@ -45,6 +45,13 @@ body{
 	height: 50px;
 	display:inline;
 }
+.imagen-perfil{
+	padding: 0px;
+	margin:5px;
+	max-width: 200px;
+	height: 100px;
+	display:inline;
+}
 .imagen-logo{
 	width: 25%;
 }
@@ -69,12 +76,12 @@ body{
 }
 .navbar {
 	margin-bottom:0;
-	font-family: times new roman;
+	font-family: Calibri;
 	background-color: #0B243B;
 
 }
 .jumbotron {
-	font-family: times new roman;
+	font-family: Calibri;
 	padding:5px 0;
 	background-color: #E6E6E6;
 }
