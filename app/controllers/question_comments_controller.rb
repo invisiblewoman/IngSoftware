@@ -28,12 +28,18 @@ class QuestionCommentsController < ApplicationController
  
 
   end
+
   def edit
+    
+    @question_comment =  QuestionComment.find(params[:id])
+    redirect_to question_path(@answer.question.id,:condicion => "0", :editar => "2", :idaq => params[:id] )
+    
   end
 
-  
-
   def update
+     @question_comment =  QuestionComment.find(params[:id])
+     @question_comment.update(texto: params[:QuestionComment][:texto])
+     redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
   end
 
   def destroy

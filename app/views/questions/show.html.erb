@@ -63,11 +63,28 @@
            <% if not @question.university.nil? %>
             <p><%= @question.university.nombre %></span></p>
           <% end %>
+
+
           <% cantidad=@question.question_comment.count %>
           <% if cantidad != 0 %>
             <% @question.question_comment.all.order("created_at desc").each do |questioncomment| %>
               <div class="alert alert-success" role="alert">
-                <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+<%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id), class:"btn btn-default"%>
+              <% if @editar != "2" or current_user != questioncomment.user %>
+                 <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+              <% else %>  
+                  <% @question_comment= questioncomment%>
+                  <%= form_for [@question,@question_comment] do |g| %>
+                    <div class="form-group">
+                      <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                      <% g.hidden_field :question %>
+                      <div class="input-group-btn">
+                        <%= g.submit "Editar comentario", class:"btn btn-default"  %>
+                      </div>
+                      
+                    </div>
+                  <% end %>
+              <% end %>
                 <% if user_signed_in? %>
                   <div class="votos pull-right">
                     <p>
@@ -164,8 +181,12 @@
           <% if cantidad != 0 %>
             <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
               <div class="alert alert-success" role="alert">
-               <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
-               <% if user_signed_in? %>
+              
+                <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+            
+
+
+                <% if user_signed_in? %>
                   <div class="votos pull-right">
                     <p>
                       <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
