@@ -38,13 +38,8 @@ class AnswersController < ApplicationController
     
     @answer =  Answer.find(params[:id])
     
-    @user=@answer.user
-    @puede=Permiso.where(nombre: "Editar Respuesta",tipo:"Necesario").first.cantidad
-    if @user.votos < @puede
-      redirect_to question_path(@answer.question.id,:condicion => "6", :editar => "0") 
-    else
       redirect_to question_path(@answer.question.id,:condicion => "0", :editar => "1", :ida => params[:id])
-    end
+   
   end
 
   def update

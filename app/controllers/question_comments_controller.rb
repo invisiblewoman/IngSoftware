@@ -33,11 +33,7 @@ class QuestionCommentsController < ApplicationController
   def edit
     
     @questioncomment =  QuestionComment.find(params[:id])
-    @user=@questioncomment.user
-    @puede=Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad
-    if @user.votos < @puede
-      redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "7", :editar => "0") 
-    else
+    
       redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "0", :editar => "2", :idaq => params[:id] )
     end
     
