@@ -1,0 +1,47 @@
+<div class="row">
+   <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-info">
+          <div class="panel-heading">Cantidad de Puntos para los Permisos</div>
+      </div>
+      <% Permiso.all.each do |permiso| %>
+        <% if permiso.tipo == "Necesario" %>
+          <%= form_for permiso do |f| %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <%= permiso.nombre %> : <span class="badge"><%= permiso.cantidad %> </span>
+                <%= f.hidden_field :permiso_id, :value => permiso.id %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+
+                <%= f.label :cantidad, "Nueva cantidad"%>
+                <%= f.number_field :cantidad, min: 1,:class => "number_field" %>
+                <%= f.submit "Actualizar permiso", class:" pull-right" %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-info">
+          <div class="panel-heading">Cantidad de Puntos que Ganan</div>
+      </div>
+      <% Permiso.all.each do |permiso| %>
+        <% if permiso.tipo == "Ganancia" %>
+          <%= form_for permiso do |f| %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <%= permiso.nombre %>   :     <span class="badge"><%= permiso.cantidad %> </span>
+                <%= f.hidden_field :permiso_id, :value => permiso.id %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+
+                <%= f.label :cantidad, "Nueva cantidad "%>
+                <%= f.number_field :cantidad, min: 1,:class => "number_field " %>
+                <%= f.submit "Actualizar permiso", class:" pull-right" %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+</div>
+

@@ -12,25 +12,43 @@ Question.destroy_all
 Answer.destroy_all
 Tag.destroy_all
 University.destroy_all
+Permiso.destroy_all
 
 
+puts "Creo Permisos"
+Permiso.find_or_create_by(nombre:"Administrar",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Votar",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Votar",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Crear Etiqueta",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Crear Etiqueta",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Crear Facultad",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Crear Facultad",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Eliminar Etiqueta",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Eliminar Etiqueta",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Eliminar Facultad",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Eliminar Facultad",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Editar Pregunta",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Editar Respuesta",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Editar Comentario",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Comentar",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Preguntar",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Responder",tipo:"Ganancia")
+Permiso.find_or_create_by(nombre:"Mejor Respuesta",tipo:"Ganancia")
 
 
 
 puts "Creo Universidades"
-University.find_or_create_by(nombre: "Otra",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Ingeniería",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Cs. Jurídicas y Sociales",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Cs. Médicas",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Arquitectura y Urbanismo",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Bellas Artes",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Cs. Astronómicas y Geofísicas",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Cs. Veterinarias",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Humanidades y Cs. de la Educación",ubicacion: "La Plata")
-University.find_or_create_by(nombre: "Facultad de Informática",ubicacion: "La Plata")
-
-
-
+University.find_or_create_by(nombre: "Ninguna")
+University.find_or_create_by(nombre: "Facultad de Ingeniería")
+University.find_or_create_by(nombre: "Facultad de Cs. Jurídicas y Sociales")
+University.find_or_create_by(nombre: "Facultad de Cs. Médicas")
+University.find_or_create_by(nombre: "Facultad de Arquitectura y Urbanismo")
+University.find_or_create_by(nombre: "Facultad de Bellas Artes")
+University.find_or_create_by(nombre: "Facultad de Cs. Astronómicas y Geofísicas")
+University.find_or_create_by(nombre: "Facultad de Cs. Veterinarias")
+University.find_or_create_by(nombre: "Facultad de Humanidades y Cs. de la Educación")
+University.find_or_create_by(nombre: "Facultad de Informática")
+University.find_or_create_by(nombre: "Otra")
 
 puts "Creo etiquetas"
 Tag.find_or_create_by(nombre: "Informatica")
@@ -47,17 +65,18 @@ Tag.find_or_create_by(nombre: "Historia")
 Tag.find_or_create_by(nombre: "Geografia")
 Tag.find_or_create_by(nombre: "Quimica")
 Tag.find_or_create_by(nombre: "Biologia")
+Tag.find_or_create_by(nombre: "Robotica")
 
 puts "Creo usuarios"
-User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd")
-User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd")
-User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd")
+User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd", votos: 100000)
+User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd", votos: 100000)
+User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd", votos: 100000)
 
 puts "Creo Preguntas"
-Question.find_or_create_by(titulo: "¿Para ser genio hay que estar loco?", cuerpo: "Me entro la duda, siempre veo algun genio que esta pirado y quiero saber si voy por buen camino", user_id: 2 )
-Question.find_or_create_by(titulo: "¿Como hacer un buen programa?", cuerpo: "Quisiera saber como hacer un buen programa de preguntas y respuestas", user_id: 1)
-Question.find_or_create_by(titulo: "¿Por qué el agua solo arruga pies y manos? ", cuerpo: "Siempre que me baño o voy a una pileta mis dedos se arrguan cual viejo, pero no se a que se debe ese efecto, alguno sabe?", user_id: 3 )
-Question.find_or_create_by(titulo: "¿Cuánto debe durar una buena siesta?", cuerpo: "Siempre duermo banda, pero quiero saber si puedo optimizar ese tiempo y dormir menos sin quitar que sea una buena siesta", user_id: 3)
+Question.find_or_create_by(titulo: "¿Para ser genio hay que estar loco?", cuerpo: "Me entro la duda, siempre veo algun genio que esta pirado y quiero saber si voy por buen camino", user_id: 2, university_id: 10, fecha: Time.now )
+Question.find_or_create_by(titulo: "¿Como hacer un buen programa?", cuerpo: "Quisiera saber como hacer un buen programa de preguntas y respuestas", user_id: 1, university_id: 7, fecha: Time.now )
+Question.find_or_create_by(titulo: "¿Por qué el agua solo arruga pies y manos? ", cuerpo: "Siempre que me baño o voy a una pileta mis dedos se arrguan cual viejo, pero no se a que se debe ese efecto, alguno sabe?", user_id: 3, university_id: 9, fecha: Time.now  )
+Question.find_or_create_by(titulo: "¿Cuánto debe durar una buena siesta?", cuerpo: "Siempre duermo banda, pero quiero saber si puedo optimizar ese tiempo y dormir menos sin quitar que sea una buena siesta", user_id: 3, university_id: 8, fecha: Time.now )
 
 puts "Creo Respuestas"
 Answer.find_or_create_by(texto: "Primero tenes que saber programar, despues hablamos", question_id: 2, user_id: 2 )

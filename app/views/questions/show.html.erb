@@ -5,7 +5,23 @@
       <% if @condicion == "2" %>
         <div class="alert alert-danger" role="alert">Usted ya hizo un voto negativo</div>
       <% else %>
-        <div class="alert alert-danger" role="alert">No puedes votarte a ti  mismo</div>
+        <% if @condicion == "3" %>
+          <div class="alert alert-danger" role="alert">No puedes votarte a ti  mismo</div>
+        <% else %>
+          <% if @condicion == "4" %>
+            <div class="alert alert-danger" role="alert">Para poder votar requieres <%= Permiso.where(nombre: "Votar",tipo:"Necesario").first.cantidad %> puntos</div>
+          <% else %>
+            <% if @condicion =="5" %>
+              <div class="alert alert-danger" role="alert">Para poder editar una pregunta requieres <%= Permiso.where(nombre: "Editar Pregunta",tipo:"Necesario").first.cantidad %> puntos</div>
+            <% else %>
+              <% if @condicion == "6" %>
+                <div class="alert alert-danger" role="alert">Para poder editar una respuesta requieres <%= Permiso.where(nombre: "Editar Respuesta",tipo:"Necesario").first.cantidad %> puntos</div>
+              <% else %>
+                  <div class="alert alert-danger" role="alert">Para poder editar un Comentario requieres <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
       <% end %>
    <% end %>
 <% end %>
@@ -24,7 +40,7 @@
           </a>
           <div class="encabezado">
 
-           <%if current_user == @question.user%> 
+           <%if current_user == @question.user %> 
             <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %></h3>
             <% else %>
               <h3 class="post-title"><%= @question.titulo %></h3>
@@ -136,6 +152,7 @@
   <h3> <span class="label label-default">Mejor respuesta</span></h3>
   <% @answer = Answer.find(@question.bestAnswer) %>
       <article class="post clearfix">
+
 <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
@@ -201,7 +218,7 @@
                   <% else %>
                    
                       <% @answerComment= AnswerComment.find(params[:idac]) %>
-                      
+
                       <%= form_for [@answer,@answerComment] do |g| %>
                         <div class="form-group">
                           <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>

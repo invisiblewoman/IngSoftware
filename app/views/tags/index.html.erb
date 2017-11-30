@@ -1,5 +1,14 @@
-<% if @condicion == "0" %>
+<% if @condicion != "1" %>
+  <% if @condicion == "0" %>
    <div class="alert alert-danger" role="alert">No se pudo crear la etiqueta ya que la misma ya existe.</div>
+  <% end %>
+  <% if @condicion == "2" %>
+    <div class="alert alert-danger" role="alert">Requieres de <%= Permiso.where(nombre: "Crear Etiqueta",tipo:"Necesario").first.cantidad %> puntos para crear una etiqueta.</div>
+  <% end %>
+   <% if @condicion == "3" %>
+    <div class="alert alert-danger" role="alert">Requieres de <%= Permiso.where(nombre: "Eliminar Etiqueta",tipo:"Necesario").first.cantidad %> puntos para eliminar una etiqueta.</div>
+  <% end %>
+ 
 <% end %>
 <div class="row">
       <section class="posts col-md-9" >
@@ -19,7 +28,7 @@
       <div class="panel panel-default">
           <div class="panel-heading">
 
-            <%= tag.nombre %>   <%= link_to "",tag,method: :delete, class:"glyphicon glyphicon-remove-sign",data:{confirm:"Estas seguro de borrar esta Etiqueta"} %>
+            <%= tag.nombre %>   <%= link_to "",tag_destroy_path(current_user,:tag_id => tag.id), class:"glyphicon glyphicon-remove-sign",data:{confirm:"Estas seguro de borrar esta Etiqueta"} %>
           </div>
         </div>
       <% end %>

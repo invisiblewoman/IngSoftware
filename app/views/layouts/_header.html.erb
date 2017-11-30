@@ -40,7 +40,7 @@
                       <li class="divider"></li>
                     </ul>
                   </li>
-                  <li><%= link_to 'Nueva Pregunta', new_question_path %> </li>
+                  <li><%= link_to 'Nueva Pregunta', new_question_path(:user => current_user) %> </li>
                   <li><a href="#">Contacto</a></li>
                 </ul>
               <% end %>
@@ -57,6 +57,7 @@
                       
                       <%= link_to 'Perfil', user_path(current_user.id),class:"btn btn-primary"%> 
                       <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete,class:"btn btn-primary"%> 
+                      
                   <% else %>
 
                       <%=link_to "Registrarse",new_user_registration_url,class:"btn btn-primary" %>
