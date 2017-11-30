@@ -16,17 +16,18 @@ Rails.application.routes.draw do
   resources :answers do
     resources :answer_comments, controller: "answer_comments"
   end
-  
   resources :comments
   resources :universities do
     get :seguidos, on: :member
     get :follow, on:   :member
     get :unfollow, on:   :member
+    get :destroy
   end
   resources :tags do
     get :seguidos, on: :member
     get :follow, on:   :member
     get :unfollow, on:   :member
+    get :destroy
   end
   resources :votes do
     get :voteQuestion

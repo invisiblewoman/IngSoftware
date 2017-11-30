@@ -51,17 +51,23 @@ before_action :authenticate_user!
     .permit(:nombre,:ubicacion,:tipo)
     )
     @cantidad=University.where(nombre: @university.nombre).count
-    
-    if @cantidad == 0 
-      if @university.save
-      
-        redirect_to universities_path(:condicion => 1)
+    @puede=Permiso.where(nombre:"Crear Facultad",tipo:"Necesario").first.cantidad
+    @ganancia=Permiso.where(nombre:"Crear Facultad",tipo:"Ganancia").first.cantidad
+     if current_user.votos > @puede
+      if @cantidad == 0 
+        if @university.save
+          current_user.votos= current_user.votos + @ganancia
+          current_user.save
+          redirect_to universities_path(:condicion => 1)
 
+        else
+          render :new
+        end
       else
-        render :new
+        redirect_to universities_path(:condicion => 0)
       end
     else
-      redirect_to universities_path(:condicion => 0)
+      redirect_to universities_path(:condicion => 2)
     end
   end
 
@@ -69,9 +75,16 @@ before_action :authenticate_user!
   end
 
   def destroy
-    @universidad=University.find(params[:id])
-    @universidad.destroy
-    redirect_to universities_path
-
+    @puede=Permiso.where(nombre:"Eliminar Facultad",tipo:"Necesario").first.cantidad
+    @ganancia=Permiso.where(nombre:"Eliminar Facultad",tipo:"Ganancia").first.cantidad
+    if current_user.votos > @puede 
+      @universidad=University.find(params[:university_id])
+      @universidad.destroy
+      current_user.votos= current_user.votos + @ganancia
+      current_user.save
+      redirect_to universities_path(:condicion => 1)
+    else
+      redirect_to universities_path(:condicion => 3)
+    end
   end
 end

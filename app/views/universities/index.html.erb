@@ -1,5 +1,14 @@
-<% if @condicion == "0" %>
+<% if @condicion != "1" %>
+  <% if @condicion == "0" %>
    <div class="alert alert-danger" role="alert">No se pudo crear la facultad ya que la misma ya existe.</div>
+  <% end %>
+  <% if @condicion == "2" %>
+    <div class="alert alert-danger" role="alert">Requieres de <%= Permiso.where(nombre: "Crear Facultad",tipo:"Necesario").first.cantidad %> puntos para crear una facultad.</div>
+  <% end %>
+   <% if @condicion == "3" %>
+    <div class="alert alert-danger" role="alert">Requieres de <%= Permiso.where(nombre: "Eliminar Facultad",tipo:"Necesario").first.cantidad %> puntos para eliminar una facultad.</div>
+  <% end %>
+ 
 <% end %>
 <div class="row">
       <section class="posts col-md-9" >
@@ -19,7 +28,7 @@
       <div class="panel panel-default">
           <div class="panel-heading">
 
-            <%= universidad.nombre %>   <%= link_to "",universidad,method: :delete, class:"glyphicon glyphicon-remove-sign",data:{confirm:"Estas seguro de borrar esta facultad"} %>
+            <%= universidad.nombre %>   <%= link_to "",university_destroy_path(current_user,:university_id => universidad.id), class:"glyphicon glyphicon-remove-sign",data:{confirm:"Estas seguro de borrar esta facultad"} %>
           </div>
         </div>
       <% end %>

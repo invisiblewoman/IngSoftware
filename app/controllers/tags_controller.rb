@@ -52,13 +52,12 @@ class TagsController < ApplicationController
     .permit(:nombre)
     )
     @cantidad=Tag.where(nombre: @tag.nombre).count
-    @Puede=Permiso.where(nombre:"Crear Etiqueta",tipo:"Necesario").first.cantidad
+    @puede=Permiso.where(nombre:"Crear Etiqueta",tipo:"Necesario").first.cantidad
     @ganancia=Permiso.where(nombre:"Crear Etiqueta",tipo:"Ganancia").first.cantidad
-    if current_user.votos > @Puede
+    if current_user.votos > @puede
       if @cantidad == 0 
         if @tag.save
           current_user.votos= current_user.votos + @ganancia
-          byebug
           current_user.save
           redirect_to tags_path(:condicion => 1)
 
@@ -77,8 +76,16 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @tag=Tag.find(params[:id])
-    @tag.destroy
-    redirect_to tags_path
+    @puede=Permiso.where(nombre:"Eliminar Etiqueta",tipo:"Necesario").first.cantidad
+    @ganancia=Permiso.where(nombre:"Eliminar Etiqueta",tipo:"Ganancia").first.cantidad
+    if current_user.votos > @puede 
+      @tag=Tag.find(params[:tag_id])
+      @tag.destroy
+      current_user.votos= current_user.votos + @ganancia
+      current_user.save
+      redirect_to tags_path(:condicion => 1)
+    else
+      redirect_to tags_path(:condicion => 3)
+    end
   end
 end

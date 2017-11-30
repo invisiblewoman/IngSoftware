@@ -22,7 +22,9 @@ class QuestionCommentsController < ApplicationController
     @question_comment.user = current_user
     @question_comment.fecha = Time.now 
     @question_comment.save
- 
+    @ganancia=Permiso.where(nombre:"Comentar",tipo:"Ganancia").first.cantidad
+    @question_comment.user.votos = @question_comment.user.votos + @ganancia
+    @question_comment.user.save
     redirect_to question_path(params[:question_id],:condicion => "0")
 
   end
@@ -30,7 +32,14 @@ class QuestionCommentsController < ApplicationController
   def edit
     
     @questioncomment =  QuestionComment.find(params[:id])
-    redirect_to question_path(@questioncomment.question.id,:condicion => "0", :editar => "2", :ida => params[:id] )
+    @user=@questioncomment.user
+    @puede=Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad
+    if @user.votos < @puede
+      redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "7", :editar => "0") 
+    else
+      redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "0", :editar => "2", :ida => params[:id] )
+    end
+    
     
   end
 

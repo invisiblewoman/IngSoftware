@@ -8,7 +8,19 @@
         <% if @condicion == "3" %>
           <div class="alert alert-danger" role="alert">No puedes votarte a ti  mismo</div>
         <% else %>
-          <div class="alert alert-danger" role="alert">Para poder votar requieres <%= Permiso.where(nombre: "Votar").first.cantidad %> puntos</div>
+          <% if @condicion == "4" %>
+            <div class="alert alert-danger" role="alert">Para poder votar requieres <%= Permiso.where(nombre: "Votar",tipo:"Necesario").first.cantidad %> puntos</div>
+          <% else %>
+            <% if @condicion =="5" %>
+              <div class="alert alert-danger" role="alert">Para poder editar una pregunta requieres <%= Permiso.where(nombre: "Editar Pregunta",tipo:"Necesario").first.cantidad %> puntos</div>
+            <% else %>
+              <% if @condicion == "6" %>
+                <div class="alert alert-danger" role="alert">Para poder editar una respuesta requieres <%= Permiso.where(nombre: "Editar Respuesta",tipo:"Necesario").first.cantidad %> puntos</div>
+              <% else %>
+                  <div class="alert alert-danger" role="alert">Para poder editar un Comentario requieres <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
    <% end %>
@@ -182,7 +194,7 @@
 
                       <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %>
                   <% else %>
-                      <% @answerComment= AnswerComment.find(:ida) %>
+                      <% @answerComment= AnswerComment.find(params[:ida]) %>
                       <%= form_for [@answer,@answerComment] do |g| %>
                         <div class="form-group">
                           <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
