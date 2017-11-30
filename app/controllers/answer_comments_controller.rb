@@ -28,12 +28,18 @@ class AnswerCommentsController < ApplicationController
  
 
   end
-  def edit
+
+ def edit
+    
+    @answerComment =  AnswerComment.find(params[:id])
+    redirect_to question_path(@answerComment.answer.question.id,:condicion => "0", :editar => "3", :idac => params[:id] )
+    
   end
 
-  
-
   def update
+     @answerComment =  AnswerComment.find(params[:id])
+     @answerComment.update(texto: params[:answer_comment][:texto])
+     redirect_to question_path(@answerComment.answer.question.id,:condicion => "0", :editar => "0")
   end
 
   def destroy
