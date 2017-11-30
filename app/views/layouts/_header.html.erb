@@ -55,7 +55,7 @@
                       <% end %>
                     </div>
                       
-                      <%= link_to 'Perfil', edit_user_registration_path,class:"btn btn-primary"%> 
+                      <%= link_to 'Perfil', user_path(current_user.id),class:"btn btn-primary"%> 
                       <%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete,class:"btn btn-primary"%> 
                   <% else %>
 
