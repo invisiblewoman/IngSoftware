@@ -24,7 +24,7 @@
     
   </div>
   <div class="checkbox">
-    <p>Seleccione su etiqueta (Debe seleccionar como minimo una etiqueta y como maximo cinco)</p> 
+    <p>Seleccione su etiqueta (Debe seleccionar como minimo una etiqueta y como maximo cinco) Si supera el maximo perdera su pregunta</p>
     <%= f.collection_select :tag_ids, Tag.all, :id, :nombre, {}, { multiple: true,class:"form-control",required:true  }%>
  
   </div> 

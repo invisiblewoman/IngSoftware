@@ -32,20 +32,17 @@ class QuestionsController < ApplicationController
 		@question.fecha = Time.now 
 		@question.bestAnswer = 0
 		@ganancia=Permiso.where(nombre:"Preguntar",tipo:"Ganancia").first.cantidad
-		if @question.save
-			@question.user.votos = @question.user.votos + @ganancia
-			@question.user.save
-			if @question.tags.count > 5 then
-				@question.destroy
-				@question.user.sav
-				@question.user.votos = @question.user.votos - @ganancia
-				redirect_to new_question_path(condicion: 0)
-			else
+		
+		if @question.tags.length > 5 then
+			redirect_to new_question_path(condicion: 0)
+		else 
+			if @question.save
+				@question.user.votos = @question.user.votos + @ganancia
+				@question.user.save
 				redirect_to questions_path
+			else
+				render :new
 			end
-
-		else
-			render :new
 		end
 	end
 
