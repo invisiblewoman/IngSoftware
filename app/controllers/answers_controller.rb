@@ -29,9 +29,6 @@ class AnswersController < ApplicationController
       @answer.save
     end
       redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
-
- 
-
   end
 
   def edit

@@ -8,7 +8,7 @@ Permiso.destroy_all
 
 
 puts "Creo Permisos"
-Permiso.find_or_create_by(nombre:"Administrar",tipo:"Necesario")
+Permiso.find_or_create_by(nombre:"Administrar",tipo:"Necesario", cantidad: 5)
 Permiso.find_or_create_by(nombre:"Votar",tipo:"Necesario")
 Permiso.find_or_create_by(nombre:"Votar",tipo:"Ganancia")
 Permiso.find_or_create_by(nombre:"Crear Etiqueta",tipo:"Necesario")
@@ -78,9 +78,9 @@ Question.find_or_create_by(titulo: "¿Cuánto debe durar una buena siesta?", cue
 puts "Creo Respuestas"
 Answer.find_or_create_by(texto: "Primero tenes que saber programar, despues hablamos", question_id: 2, user_id: 2 )
 Answer.find_or_create_by(texto: "Es facil, instalate java, mirate unos tutoriales y ya esta", question_id: 2, user_id: 3)
-Answer.find_or_create_by(texto: "Pues sí. La evidencia científica vincula a los maniaco-depresivos y bipolares con la creatividad y un alto coeficiente intelectual. Un estudio realizado por expertos del Instituto de Psiquiatría de King`s College de Londres y el Instituto Karolinska en Estocolmo concluye que los estudiantes con calificaciones excelentes mostraron cuatro veces más riesgo de demostrar trastorno bipolar.", question_id: 1 ,user_id: 1)
-Answer.find_or_create_by(texto: "Mmmm para mi que tenes que estar medio chifaldo, sino como se te ocurren las tremendas cosas que hacer algunos????", question_id: 1, user_id: 3 )
-Answer.find_or_create_by(texto: "Porque allí la dermis y epidermis son más gruesas (están pensadas para apoyar) y absorben más agua. Ambas capas de piel están casi pegadas en estas zonas, y no cabe mucho líquido entre las dos, así que la epidermis se hincha. ", question_id: 3, user_id: 1 )
+Answer.find_or_create_by(texto: "Pues sí. La evidencia científica vincula a los maniaco-depresivos y bipolares con la creatividad y un alto coeficiente intelectual. Un estudio realizado por expertos del Instituto de Psiquiatría de King`s College de Londres y el Instituto Karolinska en Estocolmo concluye que los estudiantes con calificaciones excelentes mostraron cuatro veces más riesgo de demostrar trastorno bipolar.", question_id: 1 ,user_id: 1, fecha: Time.now )
+Answer.find_or_create_by(texto: "Mmmm para mi que tenes que estar medio chifaldo, sino como se te ocurren las tremendas cosas que hacer algunos????", question_id: 1, user_id: 3 , fecha: Time.now )
+Answer.find_or_create_by(texto: "Porque allí la dermis y epidermis son más gruesas (están pensadas para apoyar) y absorben más agua. Ambas capas de piel están casi pegadas en estas zonas, y no cabe mucho líquido entre las dos, así que la epidermis se hincha. ", question_id: 3, user_id: 1 , fecha: Time.now )
 Answer.find_or_create_by(texto: "Los dedos son como una esponja, absorben y se ponen asi porque tiene mucha agua", question_id: 3, user_id: 2 )
 
 puts "Asocio preguntas y etiquetas"

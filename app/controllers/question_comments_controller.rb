@@ -33,11 +33,8 @@ class QuestionCommentsController < ApplicationController
   def edit
     
     @questioncomment =  QuestionComment.find(params[:id])
-    
-      redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "0", :editar => "2", :idaq => params[:id] )
-    end
-    
-    
+    redirect_to question_path(Question.find(@questioncomment.question_id).id,:condicion => "0", :editar => "2", :idaq => params[:id] )
+       
   end
 
   def update

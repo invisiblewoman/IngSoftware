@@ -16,8 +16,8 @@
 <% else %>
   <% @questions.order("created_at desc").each do |pregunta| %>
   <article class="post clearfix">
-          <%= image_tag pregunta.user.foto, class:"img-thumbnail imagen thumb pull-left hidden-xs hidden-sm", alt:"Foto de perfil" %>
-       
+         <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          </a>
           <div class="encabezado">
         
             <h3 class="post-title"><%= link_to pregunta.titulo, question_path(:id => pregunta.id,:condicion => "0", :editar => "0")%></h3>
@@ -42,11 +42,11 @@
           
            <div class="votos pull-right">
               <p>
-                <%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= pregunta.votes.positive.count %></span>
+                <span class="glyphicon glyphicon-thumbs-up"></span> <span class="badge positive"> <%= pregunta.votes.positive.count %></span>
               </p>
               <span style="border-left: 2px solid black;margin:1px"></span>
               <p>
-                <%= link_to "","#{}", class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= pregunta.votes.negative.count %></span>
+                <span class="glyphicon glyphicon-thumbs-down"></span> <span class="badge negative"> <%= pregunta.votes.negative.count %></span>
               </p>
           </div> 
         </div> 
