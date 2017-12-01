@@ -1,5 +1,5 @@
 <% if @condicion == "0" %>
-   <div class="alert alert-danger" role="alert">No se pudo seguir la etiqueta, la misma ya la sigues.</div>
+   <div class="alert alert-danger" role="alert">Ya sigues a esta etiqueta.</div>
 <% end %>
 <div class="row">
 <div class="row">
@@ -18,7 +18,7 @@
       <div class="panel panel-default">
           <div class="panel-heading">
 
-            <%= tags.nombre %>  <%= link_to "",follow_tag_path(:id => tags), class:"glyphicon glyphicon-plus-sign",data:{confirm:"Estas seguro de seguir esta etiqueta"} %>
+            <%= tags.nombre %>  <%= link_to "",follow_tag_path(:id => tags), class:"glyphicon glyphicon-plus-sign",data:{confirm:"¿Esta seguro de que quiere seguir esta etiqueta?"} %>
           </div>
         </div>
       <% end %>
@@ -34,7 +34,7 @@
       <% @seguidos.all.each do |etiquetaseguidas| %>
       <div class="panel panel-default">
           <div class="panel-heading">
-            <%= etiquetaseguidas.nombre %> <%= link_to "",unfollow_tag_path(:id => etiquetaseguidas), class:"glyphicon glyphicon-remove",data:{confirm:"Estas seguro de dejar de seguir esta etiqueta"} %>
+            <%= etiquetaseguidas.nombre %> <%= link_to "",unfollow_tag_path(:id => etiquetaseguidas), class:"glyphicon glyphicon-remove",data:{confirm:"¿Esta seguro de que quiere dejar de seguir esta etiqueta?"} %>
           </div>
         </div>
       <% end %>
