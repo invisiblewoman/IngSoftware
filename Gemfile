@@ -58,4 +58,6 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'kaminari' 
 gem 'hirb'
+
 gem 'tinymce-rails'
+
