@@ -46,5 +46,8 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    answer =  Answer.find(params[:id])
+    answer.destroy
+    edirect_to question_path(params[:question_id],:condicion => "0", :editar => "0") 
   end
 end

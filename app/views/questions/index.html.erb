@@ -16,7 +16,7 @@
 <% else %>
   <% @questions.order("created_at desc").each do |pregunta| %>
   <article class="post clearfix">
-         <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+         <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag pregunta.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
         

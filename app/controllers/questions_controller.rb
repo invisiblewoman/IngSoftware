@@ -13,11 +13,13 @@ class QuestionsController < ApplicationController
 		@editar = params[:editar]
 		@question = Question.find(params[:id])
 	end 
+	
 	def destroy
 	    question = Question.find(params[:id])
 	    question.destroy
 	    redirect_to questions_path
 	end
+
 	def new
 		@condicion = params[:condicion]
 		@question = Question.new
@@ -33,16 +35,13 @@ class QuestionsController < ApplicationController
 		@question.bestAnswer = 0
 		@ganancia=Permiso.where(nombre:"Preguntar",tipo:"Ganancia").first.cantidad
 		
-		if @question.tags.length > 5 then
-			redirect_to new_question_path(condicion: 0)
-		else 
-			if @question.save
+		if @question.tags.length <= 5 && @question.save
 				@question.user.votos = @question.user.votos + @ganancia
 				@question.user.save
 				redirect_to questions_path
 			else
+				@condicion = "0"
 				render :new
-			end
 		end
 	end
 
