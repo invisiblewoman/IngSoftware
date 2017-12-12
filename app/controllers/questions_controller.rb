@@ -34,13 +34,15 @@ class QuestionsController < ApplicationController
 		@ganancia=Permiso.where(nombre:"Preguntar",tipo:"Ganancia").first.cantidad
 		
 		if @question.tags.length > 5 then
-			redirect_to new_question_path(condicion: 0)
+			@condicion = "0"
+			render :new
 		else 
 			if @question.save
 				@question.user.votos = @question.user.votos + @ganancia
 				@question.user.save
 				redirect_to questions_path
 			else
+				@condicion = "1"
 				render :new
 			end
 		end

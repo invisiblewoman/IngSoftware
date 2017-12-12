@@ -2,6 +2,12 @@
    <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
 <% end %>
  </div>
+ <% if @condicion == "1" %>
+   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma requiere tener una descripcion</div>
+<% end %>
+ </div>
+
+
 <div class="row">
       <section class="posts col-md-9" >
         <div class="miga-de-pan">

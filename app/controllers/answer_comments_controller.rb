@@ -45,6 +45,9 @@ class AnswerCommentsController < ApplicationController
      redirect_to question_path(@answerComment.answer.question.id,:condicion => "0", :editar => "0")
   end
 
-  def destroy
+   def destroy
+    answerComment =   AnswerComment.find(params[:id])
+    answerComment.destroy
+    redirect_to question_path(Answer.find(params[:answer_id]).question.id,:condicion => "0", :editar => "0") 
   end
 end

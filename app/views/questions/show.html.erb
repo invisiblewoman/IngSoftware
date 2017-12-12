@@ -17,7 +17,10 @@
               <% if @condicion == "6" %>
                 <div class="alert alert-danger" role="alert">Para poder editar una respuesta necesita al menos <%= Permiso.where(nombre: "Editar Respuesta",tipo:"Necesario").first.cantidad %> puntos</div>
               <% else %>
-                  <div class="alert alert-danger" role="alert">Para poder editar un comentario necesita al menos <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
+                <% if @condicion == "10" %>
+                  <div class="alert alert-danger" role="alert">Para responder tiene que completar el campo de texto</div>
+                <% else %>
+                   <div class="alert alert-danger" role="alert">Para poder editar un comentario necesita al menos <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
               <% end %>
             <% end %>
           <% end %>
@@ -25,7 +28,7 @@
       <% end %>
    <% end %>
 <% end %>
-
+<% end %>
 <div class="row">
       <section class="posts col-md-9" >
         <div class="miga-de-pan">
@@ -36,12 +39,12 @@
           </ol>
  </div>
 <article class="post clearfix">
-          <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
+          <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag @question.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
 
            <%if current_user == @question.user %> 
-            <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %></h3>
+            <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %> <%= link_to 'Borrar', @question, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></h3>
             <% else %>
               <h3 class="post-title"><%= @question.titulo %></h3>
             <% end %>
@@ -92,7 +95,7 @@
                  
                  <% if @editar != "2" or questioncomment.id.to_s != params[:idaq] %>
 
-                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id), class:"btn btn-default  pull-right" %>
+                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar', question_question_comment_path(@question, questioncomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
                 <% else %>
                       <% @question_comment= QuestionComment.find(params[:idaq]) %>
                       <%= form_for [@question,@question_comment] do |g| %>
@@ -153,11 +156,11 @@
   <% @answer = Answer.find(@question.bestAnswer) %>
       <article class="post clearfix">
 
-<div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
+<div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag @answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
           <%if current_user == @answer.user%>
-             <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %></span></p>
+             <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %><%= link_to 'Borrar', @answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> </span></p>
           <% else %>
              <p><span class="post-fecha "> <%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %></span></p>
               <% end %>
@@ -214,7 +217,7 @@
              
                  <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
 
-                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %>
+                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar', answer_answer_comment_path(@answer, answercomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
                   <% else %>
                    
                       <% @answerComment= AnswerComment.find(params[:idac]) %>
@@ -301,11 +304,11 @@
   <% @question.answer.all.order("created_at desc").each do |answer| %>
   <article class="post clearfix">
    <% if answer.id != @question.bestAnswer %>
-          <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %> </div>
+          <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
           <%if current_user == answer.user%>
-             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
+             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%><%= link_to 'Borrar', answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
           <% else %>
              <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></span></p>
               <% end %>
@@ -362,7 +365,7 @@
              
                  <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
 
-                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %>
+                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar',  answer_answer_comment_path(answer, answercomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
                   <% else %>
                    
                       <% @answerComment= AnswerComment.find(params[:idac]) %>

@@ -26,9 +26,14 @@ class AnswersController < ApplicationController
       @answer.fecha = Time.now 
       @answer.user.votos= @answer.user.votos + @ganancia
       @answer.user.save
-      @answer.save
-    end
+      if @answer.save
+        redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
+      else 
+        redirect_to question_path(params[:question_id],:condicion => "10", :editar => "0")
+       end
+    else
       redirect_to question_path(params[:question_id],:condicion => "0", :editar => "0")
+    end
   end
 
   def edit
@@ -46,5 +51,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    answer =  Answer.find(params[:id])
+    if (answer.question.bestAnswer == answer.id)
+      answer.question.update(bestAnswer: 0)
+    end
+    id = answer.question.id
+    answer.destroy
+    redirect_to question_path(id,:condicion => "0", :editar => "0") 
   end
 end

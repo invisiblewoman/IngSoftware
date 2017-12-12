@@ -67,9 +67,9 @@ Tag.find_or_create_by(nombre: "Biologia")
 Tag.find_or_create_by(nombre: "Robotica")
 
 puts "Creo usuarios"
-User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd", descripcion:"Todo vale la pena si hace reir -LVP", votos: 100000)
-User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd", descripcion:"Madreselva hasta la muerte, Lobos manda La Plata OBDC", votos: 100000)
-User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd", descripcion:"Pole, comer, dormir, repetir", votos: 100000)
+User.create(nombre: "Martin", apellido: "Galan", university_id: 10, email: "martin@mail.com", password: "qweasd", descripcion:"Todo vale la pena si hace reir -LVP", votos: 100000, foto:"https://pbs.twimg.com/profile_images/837384909245329408/Qo34ecw6.jpg")
+User.create(nombre: "Pedro", apellido: "Abba", university_id: 10, email: "abbo@mail.com", password: "qweasd", descripcion:"Madreselva hasta la muerte, Lobos manda La Plata OBDC", votos: 100000, foto:"https://pbs.twimg.com/profile_images/801087951832813574/Oze93J52.jpg")
+User.create(nombre: "Charo", apellido: "Ares", university_id: 10, email: "chari@mail.com", password: "qweasd", descripcion:"Pole, comer, dormir, repetir", votos: 100000, foto: "https://i.pinimg.com/originals/f0/fa/85/f0fa85a617c41227b966ff3fa38e2f86.jpg")
 
 puts "Creo Preguntas"
 Question.find_or_create_by(titulo: "¿Para ser genio hay que estar loco?", cuerpo: "Me entro la duda, siempre veo algun genio que esta pirado y quiero saber si voy por buen camino", user_id: 2, university_id: 10, fecha: Time.now )
