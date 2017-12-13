@@ -5,6 +5,9 @@ body{
 	position: relative;
 	padding-bottom: 60px; 
 }
+.btn-danger{
+	margin-left: 5px;
+}
 .number_field{
 	background-color: white;
 	display: inline-block;

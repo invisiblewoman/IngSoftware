@@ -37,6 +37,9 @@
   end
   resources :tags
   resources :users
+  resources :reports do
+    get :reportes, on: :member
+  end
   root 'questions#index'
 
 end
