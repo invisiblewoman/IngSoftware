@@ -43,11 +43,17 @@
           </a>
           <div class="encabezado">
           <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
-             <%if current_user == @question.user or (current_user.votos >= @Ajeno.cantidad)%> 
-            <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %> <%= link_to 'Borrar', @question, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></h3>
-            <% else %>
-              <h3 class="post-title"><%= @question.titulo %></h3>
+            <%if user_signed_in? && (current_user == @question.user or (current_user.votos >= @Ajeno.cantidad))%> 
+              <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar', @question, method: :delete,class:"btn btn-danger", data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></li>
+                </ul>
+              </div>
+             
             <% end %>
+              <h3 class="post-title"><%= @question.titulo %></h3>
+         
 
             <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><%= link_to @question.user.full_name, perfil_path(@question.user.id) %></span></p>
 
@@ -75,7 +81,7 @@
           </div>
           <h4> Etiquetas:</h4>
           <% @question.tags.each do |tag| %>
-            <button type="button" class="btn btn-default"><%= tag.nombre %></button>
+             <%= link_to tag.nombre , tag_path(:id => tag.id),class:"btn btn-default"%>
           <% end %>
           <h4>Facultad:</h4>
 
@@ -90,14 +96,20 @@
               <div class="alert alert-success" role="alert">
               <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
     
-                <% if current_user != questioncomment.user && (current_user.votos < @Ajeno.cantidad) %>
-                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
-                <% else %>
-                 
-                 <% if @editar != "2" or questioncomment.id.to_s != params[:idaq] %>
+                <% if  user_signed_in? && (current_user == questioncomment.user or (current_user.votos >= @Ajeno.cantidad)) %>
+                   <% if @editar != "2" or questioncomment.id.to_s != params[:idaq] %>
 
-                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar', question_question_comment_path(@question, questioncomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
+               <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar', question_question_comment_path(@question, questioncomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"} %></li>
+                </ul>
+              </div>
+
+                    <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %> 
+                
                 <% else %>
+
                       <% @question_comment= QuestionComment.find(params[:idaq]) %>
                       <%= form_for [@question,@question_comment] do |g| %>
                         <div class="form-group">
@@ -110,6 +122,9 @@
                       <% end %>
                 <% end %>
 
+                <% else %>
+                  <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
+                 
 
                 <% end %>
 
@@ -161,8 +176,13 @@
           <div class="encabezado">
           <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
     
-          <%if current_user == @answer.user or (current_user.votos >= @Ajeno.cantidad)%>
-             <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %><%= link_to 'Borrar', @answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> </span></p>
+          <%if  user_signed_in? && (current_user == @answer.user or (current_user.votos >= @Ajeno.cantidad))%>
+                            <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_path(:id => @answer.id),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar', @answer, method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                </ul>
+              </div>
           <% else %>
              <p><span class="post-fecha "> <%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %></span></p>
               <% end %>
@@ -215,13 +235,15 @@
                   <div class="alert alert-success" role="alert">
                   
                    <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
-                   <% if current_user != answercomment.user && (current_user.votos < @Ajeno.cantidad) %>
-                    <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
-                <% else %>
-             
-                 <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
-
-                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar', answer_answer_comment_path(@answer, answercomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
+                   <% if  (user_signed_in?) && (current_user == answercomment.user or (current_user.votos >= @Ajeno.cantidad) )%>
+                    <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
+   <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar', answer_answer_comment_path(@answer, answercomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                </ul>
+              </div>
+                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> 
                   <% else %>
                    
                       <% @answerComment= AnswerComment.find(params[:idac]) %>
@@ -237,6 +259,9 @@
                         </div>
                       <% end %>
                   <% end %>
+                <% else %>
+             <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                 
                 <% end %>
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
@@ -312,8 +337,14 @@
           <div class="encabezado">
  <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
                   
-          <%if current_user == answer.user or (current_user.votos >= @Ajeno.cantidad)%>
-             <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%><%= link_to 'Borrar', answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
+          <%if  user_signed_in? && (current_user == answer.user or (current_user.votos >= @Ajeno.cantidad))%>
+                            <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_path(:id => answer.id),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar',  answer, method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                </ul>
+              </div>
+              <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
           <% else %>
              <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></span></p>
               <% end %>
@@ -344,7 +375,7 @@
                   </div>
 
                 <% else %>
-                  <div class="votos pull right">
+                  <div class="votos pull-right">
                      <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= answer.votes.positive.count %></span></p>
 
                     <span style="border-left: 2px solid black;margin:1px"></span>
@@ -365,29 +396,37 @@
                 <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
                    <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
-                   <% if current_user != answercomment.user && (current_user.votos < @Ajeno.cantidad)%>
-                    <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
-                <% else %>
-             
-                 <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
 
-                      <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id), class:"btn btn-default  pull-right" %><%= link_to 'Borrar',  answer_answer_comment_path(answer, answercomment), method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su comentario"}%>
-                  <% else %>
-                   
-                      <% @answerComment= AnswerComment.find(params[:idac]) %>
-                      <% @answer = answer %>
-                      <%= form_for [@answer,@answerComment] do |g| %>
-                        <div class="form-group">
-                          <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
-                          <% g.hidden_field :answer %>
-                          <div class="input-group-btn">
-                            <%= g.submit "Guardar cambios", class:"btn btn-default"  %>
+                   <% if user_signed_in? && (current_user == answercomment.user or (current_user.votos >= @Ajeno.cantidad))%>
+                     <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
+   <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
+                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id),class:"btn btn-warning  " %></li>
+                  <li> <%= link_to 'Borrar',  answer_answer_comment_path(answer, answercomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                </ul>
+              </div>
+                        <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> 
+
+                    <% else %>
+                     
+                        <% @answerComment= AnswerComment.find(params[:idac]) %>
+                        <% @answer = answer %>
+                        <%= form_for [@answer,@answerComment] do |g| %>
+                          <div class="form-group">
+                            <%= g.text_field :texto ,class: "form-control", placeholder: "Escriba su Comentario", required:true %>
+                            <% g.hidden_field :answer %>
+                            <div class="input-group-btn">
+                              <%= g.submit "Guardar cambios", class:"btn btn-default"  %>
+                            </div>
+                            
                           </div>
-                          
-                        </div>
-                      <% end %>
-                  <% end %>
-                <% end %>
+                        <% end %>
+                    <% end %>
+                  
+                <% else %>
+                   <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
+                 <% end %>
+
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
                         <p>

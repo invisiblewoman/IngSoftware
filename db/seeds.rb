@@ -79,8 +79,8 @@ Question.find_or_create_by(titulo: "¿Por qué el agua solo arruga pies y manos?
 Question.find_or_create_by(titulo: "¿Cuánto debe durar una buena siesta?", cuerpo: "Siempre duermo banda, pero quiero saber si puedo optimizar ese tiempo y dormir menos sin quitar que sea una buena siesta", user_id: 3, university_id: 8, fecha: Time.now )
 
 puts "Creo Respuestas"
-Answer.find_or_create_by(texto: "Primero tenes que saber programar, despues hablamos", question_id: 2, user_id: 2 )
-Answer.find_or_create_by(texto: "Es facil, instalate java, mirate unos tutoriales y ya esta", question_id: 2, user_id: 3)
+Answer.find_or_create_by(texto: "Primero tenes que saber programar, despues hablamos", question_id: 2, user_id: 2,fecha: Time.now  )
+Answer.find_or_create_by(texto: "Es facil, instalate java, mirate unos tutoriales y ya esta", question_id: 2, user_id: 3,fecha: Time.now )
 Answer.find_or_create_by(texto: "Pues sí. La evidencia científica vincula a los maniaco-depresivos y bipolares con la creatividad y un alto coeficiente intelectual. Un estudio realizado por expertos del Instituto de Psiquiatría de King`s College de Londres y el Instituto Karolinska en Estocolmo concluye que los estudiantes con calificaciones excelentes mostraron cuatro veces más riesgo de demostrar trastorno bipolar.", question_id: 1 ,user_id: 1, fecha: Time.now )
 Answer.find_or_create_by(texto: "Mmmm para mi que tenes que estar medio chifaldo, sino como se te ocurren las tremendas cosas que hacer algunos????", question_id: 1, user_id: 3 , fecha: Time.now )
 Answer.find_or_create_by(texto: "Porque allí la dermis y epidermis son más gruesas (están pensadas para apoyar) y absorben más agua. Ambas capas de piel están casi pegadas en estas zonas, y no cabe mucho líquido entre las dos, así que la epidermis se hincha. ", question_id: 3, user_id: 1 , fecha: Time.now )

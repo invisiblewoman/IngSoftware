@@ -184,3 +184,9 @@ ul.dropdown-menu{
 .registro button{
 	margin-left:10px;
 }
+
+.fondo-dropmenu{
+	background: transparent !important;
+	
+
+}
