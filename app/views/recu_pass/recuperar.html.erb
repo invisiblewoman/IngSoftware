@@ -1,0 +1,14 @@
+<h2>Recuperar contraseña</h2>
+<%= flash[:notice] %>
+<%= form_tag recu_pass_path,method: :post do %>
+	
+	<form>
+<div class="form-group">
+	<label>Ingrese su email</label> <br/>
+	<div class="col-sm-6">
+		<input type="text" class="form-control" placeholder="Escriba su email" required="true">
+	</div> 
+</div> </br>
+</br>
+	<%= submit_tag "Enviar" ,class:"btn btn-primary pull-left"  %>
+<% end %>

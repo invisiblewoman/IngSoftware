@@ -23,6 +23,7 @@ Permiso.find_or_create_by(nombre:"Eliminar Facultad",tipo:"Ganancia", cantidad: 
 Permiso.find_or_create_by(nombre:"Editar Pregunta",tipo:"Necesario", cantidad: 40)
 Permiso.find_or_create_by(nombre:"Editar Respuesta",tipo:"Necesario", cantidad: 40)
 Permiso.find_or_create_by(nombre:"Editar Comentario",tipo:"Necesario", cantidad: 40)
+Permiso.find_or_create_by(nombre:"Modificar ajeno",tipo:"Necesario", cantidad: 700)
 Permiso.find_or_create_by(nombre:"Comentar",tipo:"Ganancia", cantidad: 2)
 Permiso.find_or_create_by(nombre:"Preguntar",tipo:"Ganancia", cantidad: 3)
 Permiso.find_or_create_by(nombre:"Responder",tipo:"Ganancia", cantidad: 5)

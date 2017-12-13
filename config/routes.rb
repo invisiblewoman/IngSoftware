@@ -1,6 +1,14 @@
   Rails.application.routes.draw do
 
 
+ 
+get 'recu_pass' => 'recu_pass#recuperar'
+  post 'recu_pass' => 'recu_pass#create'
+
+  get 'send/index'
+  get 'send' => 'send#index'
+  post 'send' => 'send#create'
+
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations'   }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

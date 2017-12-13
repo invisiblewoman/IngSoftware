@@ -42,8 +42,8 @@
           <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag @question.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
-
-           <%if current_user == @question.user %> 
+          <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+             <%if current_user == @question.user or (current_user.votos >= @Ajeno.cantidad)%> 
             <h3 class="post-title"><%= @question.titulo %><%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-default  pull-right" %> <%= link_to 'Borrar', @question, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></h3>
             <% else %>
               <h3 class="post-title"><%= @question.titulo %></h3>
@@ -88,8 +88,9 @@
           <% if cantidad != 0 %>
             <% @question.question_comment.all.order("created_at desc").each do |questioncomment| %>
               <div class="alert alert-success" role="alert">
-
-                <% if current_user != questioncomment.user %>
+              <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+    
+                <% if current_user != questioncomment.user && (current_user.votos < @Ajeno.cantidad) %>
                     <%= questioncomment.fecha %> | <%= questioncomment.user.full_name %>: <%= questioncomment.texto %>
                 <% else %>
                  
@@ -158,8 +159,9 @@
 
 <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag @answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
-
-          <%if current_user == @answer.user%>
+          <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+    
+          <%if current_user == @answer.user or (current_user.votos >= @Ajeno.cantidad)%>
              <%= link_to 'Editar', edit_answer_path(:id => @answer.id), class:"btn btn-default  pull-right"%> <p><span class="post-fecha "><%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %><%= link_to 'Borrar', @answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> </span></p>
           <% else %>
              <p><span class="post-fecha "> <%= @answer.fecha %> por <span class="post-autor"><%= link_to @answer.user.full_name, perfil_path(@answer.user.id) %></span></p>
@@ -211,7 +213,9 @@
               <% if cantidad != 0 %>
                 <% @answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
-                   <% if current_user != answercomment.user %>
+                  
+                   <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+                   <% if current_user != answercomment.user && (current_user.votos < @Ajeno.cantidad) %>
                     <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
                 <% else %>
              
@@ -306,8 +310,9 @@
    <% if answer.id != @question.bestAnswer %>
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
-
-          <%if current_user == answer.user%>
+ <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+                  
+          <%if current_user == answer.user or (current_user.votos >= @Ajeno.cantidad)%>
              <%= link_to 'Editar', edit_answer_path(:id => answer.id), class:"btn btn-default  pull-right"%><%= link_to 'Borrar', answer, method: :delete,class:"btn btn-danger  pull-right", data: {confirm: "Esta seguro que desea elimnar su respuesta"}%> <p><span class="post-fecha "><%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
           <% else %>
              <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></span></p>
@@ -359,7 +364,8 @@
               <% if cantidad != 0 %>
                 <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
-                   <% if current_user != answercomment.user %>
+                   <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
+                   <% if current_user != answercomment.user && (current_user.votos < @Ajeno.cantidad)%>
                     <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %>
                 <% else %>
              
