@@ -1,0 +1,22 @@
+
+<div class="row">
+      <section class="posts col-md-9" >
+        <div class="miga-de-pan">
+          <ol class="breadcrumb">
+            <li><%= link_to 'Inicio', questions_path%></li>
+            <li>Nueva Denuncia</li>
+          </ol>
+ </div>
+<%= form_for @report do |f| %>
+  <div class="form-group">
+  <div class="form-group">
+    <%= f.label :razon, "Razon de la denuncia" %><br>
+    
+    <%= f.text_area :razon, :class => "tinymce", placeholder: "Escriba su denuncia" ,rows:15%>
+    <%= tinymce %>    
+    <%= f.hidden_field :denuncia_id, :value => @denuncia_id %>
+    <%= f.hidden_field :denuncia_tipo, :value => @denuncia_tipo %>
+    <%= f.hidden_field :question_id, :value => @question_id %>
+  </div>
+  <%= f.submit "Enviar Denuncia", class:"btn btn-default" %>
+<% end %>

@@ -1,22 +1,16 @@
-<% if @condicion == "0" %>
-   <div class="alert alert-danger" role="alert">No se pudo crear la pregunta, ya que la misma contenia mas de cinco etiquetas</div>
-<% end %>
 <div class="row">
   <section class="posts col-md-9" >
     <div class="miga-de-pan">
       <ol class="breadcrumb">
         <li><%= link_to 'Inicio', questions_path%></li>
+        <li>Preguntas mas Visitadas</li>
 
 </ol>
 
-</div>
- <% cantidad=@questions.count %>
- <% if cantidad == 0 %>
-    <%= image_tag "sincontenido.jpg", class:"img-thumbnail", alt:"Sin contenido" %>  
-<% else %>
-  <% @questions.order("created_at desc").each do |pregunta| %>
-  <article class="post clearfix">
-         <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag pregunta.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %>
+<% Question.all.order('visitas DESC').limit(10).each do |pregunta| %>
+
+   <article class="post clearfix">
+         <a href="#" class="imagen thumb pull-left hidden-xs hidden-sm"><%= image_tag "perfil.jpg", class:"img-thumbnail", alt:"Foto de perfil" %>
           </a>
           <div class="encabezado">
         
@@ -47,6 +41,9 @@
               <span style="border-left: 2px solid black;margin:1px"></span>
               <p>
                 <span class="glyphicon glyphicon-thumbs-down"></span> <span class="badge negative"> <%= pregunta.votes.negative.count %></span>
+
+
+                 
               </p>
               <p>
                 <span class="glyphicon glyphicon-eye-open"></span> <span class="badge negative"> <%= pregunta.visitas %></span>
@@ -55,40 +52,4 @@
         </div> 
 
       </article>
-    <% end %>
-  <% end %>
-</section>
-<% if user_signed_in? %>  
-  <% @Administrar = Permiso.where(nombre: "Administrar").first %>
-  <% if current_user.votos > @Administrar.cantidad %>
-    <%= link_to "Administrar", permisos_path(current_user), class:"btn btn-primary administrar"%> 
-  <% end %>
-  <%= link_to "Ver Preguntas mas Visitadas", masvisitadas_question_path(current_user), class:"btn btn-primary administrar"%> 
-  <aside class="col-md-3 hidden-xs hidden-sm">
-        <h4>Facultades Seguidas</h4>
-        <div class="list-group">
-          <% if current_user.universities.count == 0 %>
-            <a href="" class="list-group-item">No sigues a ninguna facultad</a>
-          <% end %>
-          <% current_user.universities.all.order("created_at desc").each do |universidad| %>
-            <%= link_to universidad.nombre ,  university_path(:id => universidad.id),class:"list-group-item"%>
-          <% end %>
-        </div>
-        
-   
-  </aside>
-  <aside class="col-md-3 hidden-xs hidden-sm">
-        <h4>Etiquetas Seguidas</h4>
-        <div class="list-group">
-          <% if current_user.tags.count == 0 %>
-            <a href="" class="list-group-item">No sigues a ninguna etiqueta</a>
-          <% end %>
-          <% current_user.tags.all.order("created_at desc").each do |tag| %>
-            <%= link_to tag.nombre ,  tag_path(:id => tag.id),class:"list-group-item"%>
-          <% end %>
-        </div>
-        
-   
-</aside>
-
 <% end %>

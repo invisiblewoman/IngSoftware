@@ -1,0 +1,11 @@
+<div class="col-md-8 col-md-offset-2">
+ <div class="panel panel-info">
+    <div class="panel-heading">Denuncias:</div>
+  </div>
+<% Report.where(reportable_id:@tipo_id,reportable_type:@tipo).all.each do |denuncia| %>
+  
+   <div class="alert alert-danger" role="alert"><%= User.find(denuncia.user_id).full_name %>: <%= sanitize denuncia.razon %>
+   </div>
+
+<% end %>
+</div>

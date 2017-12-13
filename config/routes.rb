@@ -17,9 +17,10 @@ get 'recu_pass' => 'recu_pass#recuperar'
 
   resources :questions do
    resources :answers 
+
    resources :question_comments, controller: "question_comments"
    get :bestAnswer
-    
+   get :masvisitadas,on: :member
   
   end
   resources :answers do
@@ -45,6 +46,9 @@ get 'recu_pass' => 'recu_pass#recuperar'
   end
   resources :tags
   resources :users
+  resources :reports do
+    get :reportes, on: :member
+  end
   root 'questions#index'
 
 end

@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130034348) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20171213212305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,8 +80,20 @@ ActiveRecord::Schema.define(version: 20171130034348) do
     t.bigint "user_id"
     t.bigint "university_id"
     t.integer "bestAnswer", default: 0
+    t.integer "visitas", default: 0
     t.index ["university_id"], name: "index_questions_on_university_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.string "razon"
+    t.bigint "user_id"
+    t.integer "reportable_id"
+    t.string "reportable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable_type_and_reportable_id"
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|

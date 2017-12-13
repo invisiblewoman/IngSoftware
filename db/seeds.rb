@@ -28,6 +28,7 @@ Permiso.find_or_create_by(nombre:"Comentar",tipo:"Ganancia", cantidad: 2)
 Permiso.find_or_create_by(nombre:"Preguntar",tipo:"Ganancia", cantidad: 3)
 Permiso.find_or_create_by(nombre:"Responder",tipo:"Ganancia", cantidad: 5)
 Permiso.find_or_create_by(nombre:"Mejor Respuesta",tipo:"Ganancia",cantidad: 10)
+Permiso.find_or_create_by(nombre:"Ver Denuncias",tipo:"Necesario",cantidad: 10)
 
 
 puts "Creo Universidades"

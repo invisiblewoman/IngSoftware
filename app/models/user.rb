@@ -13,6 +13,7 @@ class User < ApplicationRecord
 	has_many :answers, dependent: :destroy
   has_many :answer_comments, dependent: :destroy
   has_many :question_comments, dependent: :destroy
+  has_many :reports, dependent: :destroy
   def full_name
   	"#{nombre} #{apellido}"
   end

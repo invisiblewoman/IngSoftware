@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
 		@condicion = params[:condicion]
 		@editar = params[:editar]
 		@question = Question.find(params[:id])
+		@question.update(visitas:@question.visitas+1)
 	end 
 	def destroy
 	    question = Question.find(params[:id])
@@ -82,6 +83,9 @@ class QuestionsController < ApplicationController
 			end
 		end
 		redirect_to question_path(:id => @question.id,:condicion => "0")
+	end
+	def masvisitadas
+
 	end
 end
 

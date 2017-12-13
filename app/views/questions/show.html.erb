@@ -1,3 +1,4 @@
+<% @VerDenuncias = Permiso.where(nombre: "Ver Denuncias").first %>
 <% if @condicion != "0" %>
    <% if @condicion == "1" %>
        <div class="alert alert-danger" role="alert">Usted ya hizo un voto positivo</div>
@@ -17,10 +18,19 @@
               <% if @condicion == "6" %>
                 <div class="alert alert-danger" role="alert">Para poder editar una respuesta necesita al menos <%= Permiso.where(nombre: "Editar Respuesta",tipo:"Necesario").first.cantidad %> puntos</div>
               <% else %>
-                <% if @condicion == "10" %>
-                  <div class="alert alert-danger" role="alert">Para responder tiene que completar el campo de texto</div>
+                <% if @condicion == "7" %>
+                  <div class="alert alert-danger" role="alert">Para poder editar un comentario necesita al menos <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
                 <% else %>
-                   <div class="alert alert-danger" role="alert">Para poder editar un comentario necesita al menos <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
+                  <% if @condicion == "8" %>
+                    <div class="alert alert-danger" role="alert">No puedes realizar dos denuncias</div>
+                  <% else %>
+                    <% if @condicion == "10" %>
+                      <div class="alert alert-danger" role="alert">Para responder tiene que completar el campo de texto</div>
+                    <% else %>
+                  <div class="alert alert-danger" role="alert">No puedes denunciarte a ti mismo</div>                      
+                  <% end %>
+                <% end %>
+
               <% end %>
             <% end %>
           <% end %>
@@ -52,9 +62,19 @@
               </div>
              
             <% end %>
+
               <h3 class="post-title"><%= @question.titulo %></h3>
          
 
+            <% if user_signed_in? %>
+              
+              <% if current_user.votos > @VerDenuncias.cantidad %>
+                <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @question,:tipo => "Question"),class:"btn btn-danger" %>
+              <% end %>
+
+
+            <% end %>
+           
             <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><%= link_to @question.user.full_name, perfil_path(@question.user.id) %></span></p>
 
 
@@ -70,11 +90,16 @@
               <p>
                 <%= link_to "",new_vote_path(:valor => false,:id => @question,:tipo => "Question",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= @question.votes.negative.count %></span>
               </p>
+              <p>
+                <%= link_to "",new_report_path(:denuncia_id => @question,:denuncia_tipo => "Question",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @question.reports.count %></span>
+              </p>
             <% else %>
               <div class="votos pull-right">
                 <p><a href="#" class="glyphicon glyphicon-thumbs-up"></a><span class="badge positive"> <%= @question.votes.positive.count %></span></p>
                 <span style="border-left: 2px solid black;margin:1px"></span>
-                 <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= @question.votes.negative.count %></span>  
+                 <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= @question.votes.negative.count %></span> 
+
+                 <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= @question.reports.count %></span> 
               </div>
              
             <% end %>
@@ -130,12 +155,20 @@
 
                 <% if user_signed_in? %>
                   <div class="votos pull-right">
+                    <% if current_user.votos > @VerDenuncias.cantidad %>
+                      <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => questioncomment,:tipo => "QuestionComment"),class:"btn btn-danger" %>
+                      <% end %>
+                    <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
                       <%= link_to "",new_vote_path(:valor => true,:id => questioncomment,:tipo => "QuestionComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= questioncomment.votes.positive.count %></span>
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
                       <%= link_to "",new_vote_path(:valor => false,:id => questioncomment,:tipo => "QuestionComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= questioncomment.votes.negative.count %></span>
+                    </p>
+                    <span style="border-left: 2px solid black;margin:1px"></span>
+                    <p>
+                      <%= link_to "",new_report_path(:denuncia_id => questioncomment,:denuncia_tipo => "QuestionComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= questioncomment.reports.count %></span>
                     </p>
                   </div>
                 <% else %>
@@ -145,6 +178,8 @@
                     <span style="border-left: 2px solid black;margin:1px"></span>
 
                     <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= questioncomment.votes.negative.count %></span>
+
+                    <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= questioncomment.reports.count %></span>
                   </div>
                  
 
@@ -174,6 +209,13 @@
 
 <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag @answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
+
+          <% if user_signed_in? %>
+            <% if current_user.votos > @VerDenuncias.cantidad %>
+              <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @answer,:tipo => "Answer"),class:"btn btn-danger pull-right" %>
+            <% end %>
+
+          <% end %>
           <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
     
           <%if  user_signed_in? && (current_user == @answer.user or (current_user.votos >= @Ajeno.cantidad))%>
@@ -203,6 +245,10 @@
                     <p>
                       <%= link_to "",new_vote_path(:valor => false,:id => @answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= @answer.votes.negative.count %></span>
                     </p>
+                    <span style="border-left: 2px solid black;margin:1px"></span>
+                    <p>
+                      <%= link_to "",new_report_path(:denuncia_id => @answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @answer.reports.count %></span>
+                    </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != @answer.user %>
                         <p>
@@ -219,7 +265,7 @@
                     <span style="border-left: 2px solid black;margin:1px"></span>
 
                     <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= @answer.votes.negative.count %></span>             
-                    
+                    <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= @answer.reports.count %></span>
                   </div>  
                  
 
@@ -265,12 +311,20 @@
                 <% end %>
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
+                        <% if current_user.votos > @VerDenuncias.cantidad %>
+                          <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment"),class:"btn btn-danger" %>
+                        <% end %>
+
                         <p>
                           <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
                           <%= link_to "",new_vote_path(:valor => false,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                        </p>
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+                        <p>
+                         <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
                         </p>
                       </div>
                     <% else %>
@@ -280,6 +334,8 @@
                         <span style="border-left: 2px solid black;margin:1px"></span>
 
                         <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+
+                        <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= answercomment.reports.count %></span>
                       </div>
                      
 
@@ -335,6 +391,14 @@
    <% if answer.id != @question.bestAnswer %>
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
+
+          <% if user_signed_in? %>
+              
+            <% if current_user.votos > @VerDenuncias.cantidad %>
+              <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answer,:tipo => "Answer"),class:"btn btn-danger pull-right" %>
+            <% end %>
+
+          <% end %>
  <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
                   
           <%if  user_signed_in? && (current_user == answer.user or (current_user.votos >= @Ajeno.cantidad))%>
@@ -345,6 +409,7 @@
                 </ul>
               </div>
               <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
+
           <% else %>
              <p><span class="post-fecha "> <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></span></p>
               <% end %>
@@ -365,6 +430,10 @@
                     <p>
                       <%= link_to "",new_vote_path(:valor => false,:id => answer,:tipo => "Answer",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answer.votes.negative.count %></span>
                     </p>
+                    <span style="border-left: 2px solid black;margin:1px"></span>
+                    <p>
+                      <%= link_to "",new_report_path(:denuncia_id => answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answer.reports.count %></span>
+                    </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != answer.user %>
                         <p>
@@ -382,6 +451,7 @@
 
                     <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answer.votes.negative.count %></span>             
                     
+                    <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= answer.reports.count %></span>
                   </div>  
                  
 
@@ -395,6 +465,7 @@
               <% if cantidad != 0 %>
                 <% answer.answer_comment.all.order("created_at desc").each do |answercomment| %>
                   <div class="alert alert-success" role="alert">
+
                    <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
 
                    <% if user_signed_in? && (current_user == answercomment.user or (current_user.votos >= @Ajeno.cantidad))%>
@@ -406,6 +477,7 @@
                 </ul>
               </div>
                         <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> 
+
 
                     <% else %>
                      
@@ -429,12 +501,20 @@
 
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
+                        <% if current_user.votos > @VerDenuncias.cantidad %>
+                          <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment"),class:"btn btn-danger" %>
+                        <% end %>
                         <p>
                           <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
                           <%= link_to "",new_vote_path(:valor => false,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+                        </p>
+                        <span style="border-left: 2px solid black;margin:1px"></span>
+                        <p>
+                          <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
+
                         </p>
                       </div>
                     <% else %>
@@ -444,6 +524,8 @@
                         <span style="border-left: 2px solid black;margin:1px"></span>
 
                         <p><a href="#" class="glyphicon glyphicon-thumbs-down"></a></p><span class="badge negative"> <%= answercomment.votes.negative.count %></span>
+
+                        <p><a href="#" class="glyphicon glyphicon-minus-sign"></a></p><span class="badge negative"> <%= answercomment.reports.count %></span>
                       </div>
                      
 

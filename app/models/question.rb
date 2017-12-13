@@ -7,8 +7,12 @@ class Question < ApplicationRecord
 	has_many :answer, dependent: :destroy
 	belongs_to :university, optional:true 
 	has_many   :votes,dependent: :destroy, as: :votable
+
 	validates :cuerpo, presence: true
 	validates :titulo, presence: true
+
+	has_many   :reports,dependent: :destroy, as: :reportable
+
 	scope :search,->(parametro){
 		where('titulo LIKE ? OR cuerpo LIKE ?', "%#{parametro}%", "%#{parametro}%")
 	}
