@@ -43,7 +43,7 @@ class ReportsController < ApplicationController
 		if  @cantidad > 0
 			redirect_to question_path(@parametro[:question_id],:condicion => "8", :editar => "0")
 		else
-			if @report.user = @buscar.user 
+			if @report.user == @buscar.user 
 				redirect_to question_path(@parametro[:question_id],:condicion => "9", :editar => "0")
 			else 
 				if @report.save
