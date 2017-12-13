@@ -9,9 +9,10 @@
 
   resources :questions do
    resources :answers 
+
    resources :question_comments, controller: "question_comments"
    get :bestAnswer
-    
+   get :masvisitadas,on: :member
   
   end
   resources :answers do
