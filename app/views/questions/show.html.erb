@@ -21,7 +21,11 @@
                 <% if @condicion == "7" %>
                   <div class="alert alert-danger" role="alert">Para poder editar un comentario necesita al menos <%= Permiso.where(nombre: "Editar Comentario",tipo:"Necesario").first.cantidad %> puntos</div>
                 <% else %>
-                  <div class="alert alert-danger" role="alert">No puedes realizar dos denuncias</div>
+                  <% if @condicion == "8" %>
+                    <div class="alert alert-danger" role="alert">No puedes realizar dos denuncias</div>
+                  <% else %>
+                    <div class="alert alert-danger" role="alert">No puedes denunciarte a ti mismo</div>                      
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
