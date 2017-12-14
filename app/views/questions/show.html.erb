@@ -91,7 +91,7 @@
                 <%= link_to "",new_vote_path(:valor => false,:id => @question,:tipo => "Question",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= @question.votes.negative.count %></span>
               </p>
               <p>
-                <%= link_to "",new_report_path(:denuncia_id => @question,:denuncia_tipo => "Question",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @question.reports.count %></span>
+                <%= link_to "",new_report_path(:denuncia_id => @question,:denuncia_tipo => "Question",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @question.reports.count %></span>
               </p>
             <% else %>
               <div class="votos pull-right">
@@ -168,7 +168,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => questioncomment,:denuncia_tipo => "QuestionComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= questioncomment.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => questioncomment,:denuncia_tipo => "QuestionComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= questioncomment.reports.count %></span>
                     </p>
                   </div>
                 <% else %>
@@ -247,7 +247,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => @answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @answer.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => @answer,:denuncia_tipo => "Answer",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @answer.reports.count %></span>
                     </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != @answer.user %>
@@ -324,7 +324,7 @@
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
-                         <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
+                         <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
                         </p>
                       </div>
                     <% else %>
@@ -432,7 +432,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answer.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => answer,:denuncia_tipo => "Answer",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answer.reports.count %></span>
                     </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != answer.user %>
@@ -513,7 +513,7 @@
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
-                          <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
+                          <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
 
                         </p>
                       </div>

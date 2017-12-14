@@ -32,7 +32,7 @@
         <% end %>
         <h4>Facultad:</h4>
         <% if not pregunta.university.nil? %>
-          <p><%= pregunta.university.nombre %></span></p>
+          <%= link_to pregunta.university.nombre , university_path(:id => pregunta.university.id),class:"btn btn-default"%>
         <% end %>
         <div class="contenedor-botones">
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id,:condicion => "0", :editar => "0"),class:"btn btn-primary pull-right"%>
