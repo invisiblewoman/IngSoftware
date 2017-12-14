@@ -5,7 +5,11 @@ class QuestionsController < ApplicationController
 		if params[:buscar]
 			@questions = Question.search(params[:buscar])
 		else 
-			@questions = Question.all
+			if params[:masvisitadas]
+				@questions = Question.all.order('visitas DESC').limit(10)
+			else
+				@questions = Question.all
+			end
 		end
 	end
 	def show

@@ -63,7 +63,7 @@
   <% if current_user.votos > @Administrar.cantidad %>
     <%= link_to "Administrar", permisos_path(current_user), class:"btn btn-primary administrar"%> 
   <% end %>
-  <%= link_to "Ver Preguntas mas Visitadas", masvisitadas_question_path(current_user), class:"btn btn-primary administrar"%> 
+  <%= link_to "Ver Preguntas mas Visitadas", questions_path(masvisitadas: true), class:"btn btn-primary administrar"%> 
   <aside class="col-md-3 hidden-xs hidden-sm">
         <h4>Facultades Seguidas</h4>
         <div class="list-group">
