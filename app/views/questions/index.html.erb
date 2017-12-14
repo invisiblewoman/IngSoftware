@@ -28,11 +28,11 @@
         <br>
         <h4> Etiquetas:</h4>
         <% pregunta.tags.each do |tag| %>
-          <%= link_to tag.nombre , tag_path(:id => tag.id),class:"btn btn-default"%>
+          <%= link_to tag.nombre ,questions_path(etiquetas: tag),class:"btn btn-default"%>
         <% end %>
         <h4>Facultad:</h4>
         <% if not pregunta.university.nil? %>
-          <%= link_to pregunta.university.nombre , university_path(:id => pregunta.university.id),class:"btn btn-default"%>
+          <%= link_to pregunta.university.nombre , questions_path(facultad: pregunta.university.id),class:"btn btn-default"%>
         <% end %>
         <div class="contenedor-botones">
           <%= link_to 'Leer Mas', question_path(:id => pregunta.id,:condicion => "0", :editar => "0"),class:"btn btn-primary pull-right"%>
@@ -71,7 +71,7 @@
             <a href="" class="list-group-item">No sigues a ninguna facultad</a>
           <% end %>
           <% current_user.universities.all.order("created_at desc").each do |universidad| %>
-            <%= link_to universidad.nombre ,  university_path(:id => universidad.id),class:"list-group-item"%>
+            <%= link_to universidad.nombre ,   questions_path(facultad: universidad),class:"list-group-item"%>
           <% end %>
         </div>
         
@@ -84,7 +84,7 @@
             <a href="" class="list-group-item">No sigues a ninguna etiqueta</a>
           <% end %>
           <% current_user.tags.all.order("created_at desc").each do |tag| %>
-            <%= link_to tag.nombre ,  tag_path(:id => tag.id),class:"list-group-item"%>
+            <%= link_to tag.nombre , questions_path(etiquetas: tag),class:"list-group-item"%>
           <% end %>
         </div>
         

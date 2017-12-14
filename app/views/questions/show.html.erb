@@ -55,9 +55,14 @@
           <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
             <%if user_signed_in? && (current_user == @question.user or (current_user.votos >= @Ajeno.cantidad))%> 
               <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_question_path(:id => params[:id]),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar', @question, method: :delete,class:"btn btn-danger", data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></li>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                  <li> <%= link_to 'Editar', edit_question_path(:id => params[:id])%></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to 'Borrar', @question, method: :delete, data: {confirm: "Esta seguro que desea elimnar su pregunta"} %></li>
+                     <% if current_user.votos > @VerDenuncias.cantidad %>
+                <li class="divider"></li>
+                <li><%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @question,:tipo => "Question")%></li>  
+              <% end %>
                 </ul>
               </div>
              
@@ -66,14 +71,6 @@
               <h3 class="post-title"><%= @question.titulo %></h3>
          
 
-            <% if user_signed_in? %>
-              
-              <% if current_user.votos > @VerDenuncias.cantidad %>
-                <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @question,:tipo => "Question"),class:"btn btn-danger" %>
-              <% end %>
-
-
-            <% end %>
            
             <p><span class="post-fecha"><%= @question.fecha %></span> por <span class="post-autor"><%= link_to @question.user.full_name, perfil_path(@question.user.id) %></span></p>
 
@@ -91,7 +88,7 @@
                 <%= link_to "",new_vote_path(:valor => false,:id => @question,:tipo => "Question",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-down" %><span class="badge negative"> <%= @question.votes.negative.count %></span>
               </p>
               <p>
-                <%= link_to "",new_report_path(:denuncia_id => @question,:denuncia_tipo => "Question",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @question.reports.count %></span>
+                <%= link_to "",new_report_path(:denuncia_id => @question,:denuncia_tipo => "Question",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @question.reports.count %></span>
               </p>
             <% else %>
               <div class="votos pull-right">
@@ -106,14 +103,14 @@
           </div>
           <h4> Etiquetas:</h4>
           <% @question.tags.each do |tag| %>
-             <%= link_to tag.nombre , tag_path(:id => tag.id),class:"btn btn-default"%>
+             <%= link_to tag.nombre ,questions_path(etiquetas: tag),class:"btn btn-default"%>
           <% end %>
           <h4>Facultad:</h4>
 
            <% if not @question.university.nil? %>
-             <%= link_to @question.university.nombre , university_path(:id => @question.university.id),class:"btn btn-default"%>
+           <%= link_to @question.university.nombre , questions_path(facultad: @question.university.id),class:"btn btn-default"%>
           <% end %>
-
+          </br></br>
 
           <% cantidad=@question.question_comment.count %>
           <% if cantidad != 0 %>
@@ -125,9 +122,14 @@
                    <% if @editar != "2" or questioncomment.id.to_s != params[:idaq] %>
 
                <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar', question_question_comment_path(@question, questioncomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"} %></li>
+                <ul class="dropdown-menu dropdown-menu-right " role="menu" >
+                  <li> <%= link_to 'Editar', edit_question_question_comment_path(:id => questioncomment.id, :question_id => questioncomment.question.id) %></li>
+                <li class="divider"></li>
+                  <li> <%= link_to 'Borrar', question_question_comment_path(@question, questioncomment), method: :delete,data: {confirm: "Esta seguro que desea elimnar su comentario"} %></li>
+                    <li class="divider"></li>
+                    <% if current_user.votos > @VerDenuncias.cantidad %>
+                      <li><%= link_to "Ver denuncias",reportes_report_path(:tipo_id => questioncomment,:tipo => "QuestionComment")%></li> 
+                      <% end %>
                 </ul>
               </div>
 
@@ -155,9 +157,7 @@
 
                 <% if user_signed_in? %>
                   <div class="votos pull-right">
-                    <% if current_user.votos > @VerDenuncias.cantidad %>
-                      <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => questioncomment,:tipo => "QuestionComment"),class:"btn btn-danger" %>
-                      <% end %>
+         
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
                       <%= link_to "",new_vote_path(:valor => true,:id => questioncomment,:tipo => "QuestionComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= questioncomment.votes.positive.count %></span>
@@ -168,7 +168,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => questioncomment,:denuncia_tipo => "QuestionComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= questioncomment.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => questioncomment,:denuncia_tipo => "QuestionComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= questioncomment.reports.count %></span>
                     </p>
                   </div>
                 <% else %>
@@ -210,19 +210,19 @@
 <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag @answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
-          <% if user_signed_in? %>
-            <% if current_user.votos > @VerDenuncias.cantidad %>
-              <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @answer,:tipo => "Answer"),class:"btn btn-danger pull-right" %>
-            <% end %>
-
-          <% end %>
+         
           <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
     
           <%if  user_signed_in? && (current_user == @answer.user or (current_user.votos >= @Ajeno.cantidad))%>
                             <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_answer_path(:id => @answer.id),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar', @answer, method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                <ul class="dropdown-menu dropdown-menu-right " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_path(:id => @answer.id) %></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to 'Borrar', @answer, method: :delete,data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                  <li class="divider"></li>
+                 <% if current_user.votos > @VerDenuncias.cantidad %>
+              <li><%= link_to "Ver denuncias",reportes_report_path(:tipo_id => @answer,:tipo => "Answer")%></li> 
+            <% end %>
                 </ul>
               </div>
           <% else %>
@@ -247,7 +247,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => @answer,:denuncia_tipo => "Answer",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @answer.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => @answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= @answer.reports.count %></span>
                     </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != @answer.user %>
@@ -284,9 +284,14 @@
                    <% if  (user_signed_in?) && (current_user == answercomment.user or (current_user.votos >= @Ajeno.cantidad) )%>
                     <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
    <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar', answer_answer_comment_path(@answer, answercomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id)%></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to 'Borrar', answer_answer_comment_path(@answer, answercomment), method: :delete,data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                  <li class="divider"></li>
+                   <% if current_user.votos > @VerDenuncias.cantidad %>
+                         <li>   <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment")%></li>
+                        <% end %>
                 </ul>
               </div>
                       <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> 
@@ -311,9 +316,7 @@
                 <% end %>
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
-                        <% if current_user.votos > @VerDenuncias.cantidad %>
-                          <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment"),class:"btn btn-danger" %>
-                        <% end %>
+                     
 
                         <p>
                           <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
@@ -324,7 +327,7 @@
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
-                         <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
+                         <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
                         </p>
                       </div>
                     <% else %>
@@ -392,20 +395,22 @@
           <div class="imagen thumb pull-left hidden-xs hidden-sm"> <%= image_tag answer.user.foto, class:"img-thumbnail", alt:"Foto de perfil" %> </div>
           <div class="encabezado">
 
-          <% if user_signed_in? %>
               
-            <% if current_user.votos > @VerDenuncias.cantidad %>
-              <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answer,:tipo => "Answer"),class:"btn btn-danger pull-right" %>
-            <% end %>
+           
 
-          <% end %>
+        
  <% @Ajeno = Permiso.where(nombre: "Modificar ajeno").first %>
                   
           <%if  user_signed_in? && (current_user == answer.user or (current_user.votos >= @Ajeno.cantidad))%>
                             <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_answer_path(:id => answer.id),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar',  answer, method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_path(:id => answer.id)%></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to 'Borrar',  answer, method: :delete,data: {confirm: "Esta seguro que desea elimnar su respuesta"}%></li>
+                 <li class="divider"></li>
+                 <% if current_user.votos > @VerDenuncias.cantidad %>
+              <li><%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answer,:tipo => "Answer") %></li>  
+            <% end %>
                 </ul>
               </div>
               <%= answer.fecha %> por <span class="post-autor"><%= link_to answer.user.full_name, perfil_path(answer.user.id) %></a></span></p>
@@ -432,7 +437,7 @@
                     </p>
                     <span style="border-left: 2px solid black;margin:1px"></span>
                     <p>
-                      <%= link_to "",new_report_path(:denuncia_id => answer,:denuncia_tipo => "Answer",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answer.reports.count %></span>
+                      <%= link_to "",new_report_path(:denuncia_id => answer,:denuncia_tipo => "Answer",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answer.reports.count %></span>
                     </p>
                     <% if current_user == @question.user %>
                       <% if @question.user != answer.user %>
@@ -471,9 +476,14 @@
                    <% if user_signed_in? && (current_user == answercomment.user or (current_user.votos >= @Ajeno.cantidad))%>
                      <% if @editar != "3" or answercomment.id.to_s != params[:idac] %>
    <div class="dropdown pull-right"><a class="dropdown-toggle glyphicon glyphicon-option-horizontal pull-right btn btn-default " data-toggle="dropdown" role="button"></a> 
-                <ul class="dropdown-menu dropdown-menu-right fondo-dropmenu " role="menu" >
-                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id),class:"btn btn-warning  " %></li>
-                  <li> <%= link_to 'Borrar',  answer_answer_comment_path(answer, answercomment), method: :delete,class:"btn btn-danger  ",data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                <ul class="dropdown-menu dropdown-menu-right  " role="menu" >
+                  <li> <%= link_to 'Editar', edit_answer_answer_comment_path(:id => answercomment.id, :answer_id => answercomment.answer.id) %></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to 'Borrar',  answer_answer_comment_path(answer, answercomment), method: :delete,data: {confirm: "Esta seguro que desea elimnar su comentario"}%></li>
+                 <li class="divider"></li>
+                  <% if current_user.votos > @VerDenuncias.cantidad %>
+                        <li>  <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment")%></li>
+                        <% end %>
                 </ul>
               </div>
                         <%= answercomment.fecha %> | <%= answercomment.user.full_name %>: <%= answercomment.texto %> 
@@ -501,9 +511,7 @@
 
                    <% if user_signed_in? %>
                       <div class="votos pull-right">
-                        <% if current_user.votos > @VerDenuncias.cantidad %>
-                          <%= link_to "Ver denuncias",reportes_report_path(:tipo_id => answercomment,:tipo => "AnswerComment"),class:"btn btn-danger" %>
-                        <% end %>
+                        
                         <p>
                           <%= link_to "",new_vote_path(:valor => true,:id => answercomment,:tipo => "AnswerComment",:user => current_user.id,:question => @question), class:"glyphicon glyphicon-thumbs-up" %><span class="badge positive"> <%= answercomment.votes.positive.count %></span>
                         </p>
@@ -513,7 +521,7 @@
                         </p>
                         <span style="border-left: 2px solid black;margin:1px"></span>
                         <p>
-                          <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question,:condicion => "0"), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
+                          <%= link_to "",new_report_path(:denuncia_id => answercomment,:denuncia_tipo => "AnswerComment",:question_id => @question), class:"glyphicon glyphicon-minus-sign" %><span class="badge negative"> <%= answercomment.reports.count %></span>
 
                         </p>
                       </div>

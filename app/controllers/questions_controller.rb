@@ -8,7 +8,15 @@ class QuestionsController < ApplicationController
 			if params[:masvisitadas]
 				@questions = Question.all.order('visitas DESC').limit(10)
 			else
-				@questions = Question.all
+				if params[:etiquetas]
+					@questions = Tag.find(params[:etiquetas]).questions.all.order("created_at desc")
+				else
+					if params[:facultad]
+						@questions = University.find(params[:facultad]).question.all.order("created_at desc")
+					else
+						@questions = Question.all
+					end
+				end
 			end
 		end
 	end
