@@ -6,6 +6,7 @@ class ReportsController < ApplicationController
 		
 	end
 	def new
+		@condicion = params[:condicion]
 		@report = Report.new
 		@denuncia_id = params[:denuncia_id]
 		@denuncia_tipo = params[:denuncia_tipo]
@@ -49,7 +50,7 @@ class ReportsController < ApplicationController
 				if @report.save
 						redirect_to question_path(@parametro[:question_id],:condicion => "0", :editar => "0")
 					else
-						render :new
+						redirect_to new_report_path(:denuncia_id => @parametro[:denuncia_id],:denuncia_tipo =>@parametro[:denuncia_tipo],:question_id => @parametro[:question_id],:condicion => "1")
 				end
 			end
 		end

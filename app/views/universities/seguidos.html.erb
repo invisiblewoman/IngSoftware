@@ -18,7 +18,7 @@
       <div class="panel panel-default">
           <div class="panel-heading">
 
-            <%= universidad.nombre %>  <%= link_to "",follow_university_path(:id => universidad), class:"glyphicon glyphicon-plus-sign",data:{confirm:"Estas seguro de seguir esta facultad"} %>
+             <%= link_to universidad.nombre ,  university_path(:id => universidad.id) %> <%= link_to "",follow_university_path(:id => universidad), class:"glyphicon glyphicon-plus-sign",data:{confirm:"Estas seguro de seguir esta facultad"} %>
           </div>
         </div>
       <% end %>
