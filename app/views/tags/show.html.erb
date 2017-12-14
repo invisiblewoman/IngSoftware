@@ -32,7 +32,7 @@
             <p><%= pregunta.university.nombre %></span></p>
           <% end %>
           <div class="contenedor-botones">
-            <%= link_to 'Leer Mas', question_path(:id => pregunta.id),class:"btn btn-primary pull-right"%>
+            <%= link_to 'Leer Mas', question_path(:id => pregunta.id,:condicion => "0", :editar => "0"),class:"btn btn-primary pull-right"%>
                
             <p  class="label label-success pull-right CantRespuestas">Respuestas <span class="badge"><%= pregunta.answer.count %></span></p> 
           </div> 
