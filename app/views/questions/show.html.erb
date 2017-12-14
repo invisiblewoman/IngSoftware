@@ -111,7 +111,7 @@
           <h4>Facultad:</h4>
 
            <% if not @question.university.nil? %>
-            <p><%= @question.university.nombre %></span></p>
+             <%= link_to @question.university.nombre , university_path(:id => @question.university.id),class:"btn btn-default"%>
           <% end %>
 
 
